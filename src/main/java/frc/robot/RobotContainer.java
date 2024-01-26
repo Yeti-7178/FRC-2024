@@ -23,6 +23,7 @@ import frc.robot.commands.vision.AutoAlignCircle;
 import frc.robot.commands.vision.DefaultLimelightPipeline;
 import frc.robot.commands.vision.UpdateOdometry;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -41,10 +42,12 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
   // The driver's controller
   // final Joystick m_driverController = new Joystick(OIConstants.kDriverControllerPort);
   final XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  final XboxController m_opperatorController = new XboxController(OIConstants.kOpperatorControllerPort);
 
   SendableChooser<Command> m_autonChooser = new SendableChooser<>();
 
@@ -149,6 +152,14 @@ public class RobotContainer {
         .onTrue(new InstantCommand(
             () -> m_robotDrive.setHeading(90),
             m_robotDrive));
+    new JoystickButton(m_opperatorController, Button.kRightBumper.value)
+        .whileTrue
+        (
+          new InstantCommand(m_intakeSubsystem::intakeRunForward)
+        )
+        .onFalse(
+          new InstantCommand(m_intakeSubsystem::intakeRunStop)
+        );
   }
 
   public void resetPose(){
