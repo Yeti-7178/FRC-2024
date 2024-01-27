@@ -197,4 +197,10 @@ public final class Constants {
      */
     public static final int kDefaultPipeline = kAprilTagPipeline;
   }
+  public static final class ShooterConstants{
+    public static final int kUpperShooterMotorPortA = 20; //Needs to be changed
+    public static final double kUpperShooterMotorSpeedA = 0.35; //Needs to be changed
+    public static final int kUpperShooterMotorPortB = 21; //Needs to be changed
+    public static final double kUpperShooterMotorSpeedB = 0.6; //Needs to be changed
+  }
 }
