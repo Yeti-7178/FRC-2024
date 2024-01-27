@@ -197,4 +197,11 @@ public final class Constants {
      */
     public static final int kDefaultPipeline = kAprilTagPipeline;
   }
+
+  public static final class AmpConstants {
+    // ** these will need to be changed/established before testing **
+    public static final int kAmpSensorChannel = 1;
+    public static final int kPusherForwardPort = 1;
+    public static final int kPusherReversePort = 1;
+  }
 }
