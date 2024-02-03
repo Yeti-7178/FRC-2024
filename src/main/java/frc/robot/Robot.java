@@ -7,6 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+// for LEDS
+import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.Constants.LEDConstants;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -28,6 +31,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    //initialize the length of the LEDs, called here because it's an expensive task
+    //uncomment this once LEDs are added
+    // LEDSubsystem.SetLEDLength(LEDConstants.kLEDLength);
   }
 
   /**
