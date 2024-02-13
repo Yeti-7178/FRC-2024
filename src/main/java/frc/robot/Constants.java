@@ -198,6 +198,12 @@ public final class Constants {
     public static final int kDefaultPipeline = kAprilTagPipeline;
   }
 
+  public static final class IndexerConstants {
+    //establish all of these once the subsystem is actually wired up yk the deal
+    public static final int kIndexerConveyorMotorPort = 0;
+    public static final int kIndexerSensorChannel = 0;
+  }
+
   public static final class LEDConstants {
     // establish all of these once the LEDs are actually established yk the deal
     public static final int kLEDPort = 1;
