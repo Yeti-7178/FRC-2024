@@ -197,4 +197,11 @@ public final class Constants {
      */
     public static final int kDefaultPipeline = kAprilTagPipeline;
   }
+
+  public static final class LEDConstants {
+    // establish all of these once the LEDs are actually established yk the deal
+    public static final int kLEDPort = 1;
+    public static final int kLEDLength = 0;
+
+  }
 }
