@@ -36,25 +36,33 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset,
-      ModuleConstants.kLeftFrontInverted);
+      ModuleConstants.kLeftFrontInverted,
+      true
+      );
 
   private final SwerveModule m_frontRight = new SwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset,
-      ModuleConstants.kRightFrontInverted);
+      ModuleConstants.kRightFrontInverted,
+      false
+      );
 
   private final SwerveModule m_rearLeft = new SwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset,
-      ModuleConstants.kLeftRearInverted);
+      ModuleConstants.kLeftRearInverted,
+      true
+      );
 
   private final SwerveModule m_rearRight = new SwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset,
-      ModuleConstants.kRightRearInverted);
+      ModuleConstants.kRightRearInverted,
+      true
+      );
 
   // The gyro sensor
   private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
@@ -176,7 +184,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Get the target chassis speeds relative to the robot
     final ChassisSpeeds targetVel = (fieldRelative ?
-      ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(m_gyro.getAngle()))
+      ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(-m_gyro.getAngle()))
         : new ChassisSpeeds(xSpeed, ySpeed, rot)
     );
 

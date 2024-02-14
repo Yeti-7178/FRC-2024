@@ -72,13 +72,6 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
-        // new RunCommand(
-        //     () -> m_robotDrive.drive(
-        //         -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
-        //         -MathUtil.applyDeadband(m_driverController.getX(), OIConstants.kDriveDeadband),
-        //         -MathUtil.applyDeadband(m_driverController.getTwist(), OIConstants.kDriveDeadband),
-        //         true, true),
-        //     m_robotDrive));
     
     // "registerCommand" lets pathplanner identify our commands
     // Here's the autoalign as an example:
@@ -110,10 +103,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     //Right bumper: puts drive into x mode
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
+    // new JoystickButton(m_driverController, Button.kRightBumper.value)
+    //     .whileTrue(new RunCommand(
+    //         () -> m_robotDrive.setX(),
+    //         m_robotDrive));
     
     //Left bumper: sets gyro to 0 degrees
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
@@ -152,7 +145,7 @@ public class RobotContainer {
         .onTrue(new InstantCommand(
             () -> m_robotDrive.setHeading(90),
             m_robotDrive));
-    new JoystickButton(m_opperatorController, Button.kRightBumper.value)
+    new JoystickButton(m_driverController, Button.kRightBumper.value)
         .whileTrue
         (
           new InstantCommand(m_intakeSubsystem::intakeRunForward)

@@ -35,7 +35,7 @@ public class SwerveModule {
    * encoder, and PID controller. This configuration is specific to the MK4 and 
    * MK4i swerve modules with 2 NEOs, 2 Spark Maxes and an SRX Mag Encoder.
    */
-  public SwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset, boolean invertDrive) {
+  public SwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset, boolean invertDrive, boolean invertTurn) {
     m_drivingSparkMax = new CANSparkMax(drivingCANId, MotorType.kBrushless);
     m_turningSparkMax = new CANSparkMax(turningCANId, MotorType.kBrushless);
 
@@ -99,7 +99,7 @@ public class SwerveModule {
     m_turningSparkMax.setSmartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
 
     // Inverting turning motor
-    m_turningSparkMax.setInverted(false);
+    m_turningSparkMax.setInverted(invertTurn);
     // Inverting drive motor
     m_drivingSparkMax.setInverted(invertDrive);
 
