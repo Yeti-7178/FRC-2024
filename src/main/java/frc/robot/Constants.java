@@ -202,6 +202,8 @@ public final class Constants {
     //establish all of these once the subsystem is actually wired up yk the deal
     public static final int kIndexerConveyorMotorPort = 0;
     public static final int kIndexerSensorChannel = 0;
+    public static final double kIndexerConveyorStdSpeed = 0.5; //needs to be tested
+    public static final boolean kIndexerMotorInverted = false;
   }
 
   public static final class LEDConstants {
