@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.commands.indexing.AutoIndex;
+import frc.robot.subsystems.IndexerSubsystem;
 
 import java.util.Map;
 
@@ -41,8 +43,10 @@ import java.util.Map;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  // private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+  // private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  // private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+
   // uncomment this once LEDs are addded
   // private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
 
@@ -61,7 +65,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure limelight default pipeline
-    m_visionSubsystem.setDefaultCommand(new DefaultLimelightPipeline(m_visionSubsystem));
+    // m_visionSubsystem.setDefaultCommand(new DefaultLimelightPipeline(m_visionSubsystem));
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -74,14 +78,22 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
+        // new RunCommand(
+        //     () -> m_robotDrive.drive(
+        //         -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
+        //         -MathUtil.applyDeadband(m_driverController.getX(), OIConstants.kDriveDeadband),
+        //         -MathUtil.applyDeadband(m_driverController.getTwist(), OIConstants.kDriveDeadband),
+        //         true, true),
+        //     m_robotDrive));
     
     // "registerCommand" lets pathplanner identify our commands
     // Here's the autoalign as an example:
-    NamedCommands.registerCommand("Auto Align", new AutoAlignAutoAim(m_visionSubsystem, m_robotDrive));
+    // NamedCommands.registerCommand("Auto Align", new AutoAlignAutoAim(m_visionSubsystem, m_robotDrive));
+    // NamedCommands.registerCommand("AutoIndex", new AutoIndex(m_indexerSubsystem, m_intakeSubsystem));
 
     //Adding options to the sendable chooser
     m_autonChooser.setDefaultOption("Template Auton", new TemplateAuton(m_robotDrive));
-    m_autonChooser.addOption("Path Planner", new PathPlannerAuto("Example Auton"));
+    m_autonChooser.addOption("Path Planner", new PathPlannerAuto("test"));
 
     // Put chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2, 1)
@@ -90,7 +102,7 @@ public class RobotContainer {
     // DEBUG: shuffleboard widget for resetting pose. For now I'm using a default pose of 0, 0 and a rotation of 0
     Shuffleboard.getTab("Swerve").add("reset pose", new InstantCommand(this::resetPose)).withSize(2, 1);
 
-    Shuffleboard.getTab("Vision").add("update odometry", new UpdateOdometry(m_robotDrive, m_visionSubsystem));
+    // Shuffleboard.getTab("Vision").add("update odometry", new UpdateOdometry(m_robotDrive, m_visionSubsystem));
   }
 
   /**
@@ -105,10 +117,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     //Right bumper: puts drive into x mode
-    // new JoystickButton(m_driverController, Button.kRightBumper.value)
-    //     .whileTrue(new RunCommand(
-    //         () -> m_robotDrive.setX(),
-    //         m_robotDrive));
+    new JoystickButton(m_driverController, Button.kRightBumper.value)
+        .whileTrue(new RunCommand(
+            () -> m_robotDrive.setX(),
+            m_robotDrive));
     
     //Left bumper: sets gyro to 0 degrees
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
@@ -117,10 +129,10 @@ public class RobotContainer {
             m_robotDrive));
     
     //Y button: auto aim (high pole) (i set it to be on a button press, not held)
-    new JoystickButton(m_driverController, Button.kY.value)
-        .toggleOnTrue(
-            new AutoAlignCircle(m_visionSubsystem, m_robotDrive)
-        );
+    // new JoystickButton(m_driverController, Button.kY.value)
+    //     .toggleOnTrue(
+    //         new AutoAlignCircle(m_visionSubsystem, m_robotDrive)
+    //     );
     
     //A button: makes robot face 0 degrees
     new JoystickButton(m_driverController, Button.kA.value)
@@ -147,14 +159,14 @@ public class RobotContainer {
         .onTrue(new InstantCommand(
             () -> m_robotDrive.setHeading(90),
             m_robotDrive));
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .whileTrue
-        (
-          new InstantCommand(m_intakeSubsystem::intakeRunForward)
-        )
-        .onFalse(
-          new InstantCommand(m_intakeSubsystem::intakeRunStop)
-        );
+    // new JoystickButton(m_opperatorController, Button.kRightBumper.value)
+    //     .whileTrue
+    //     (
+    //       new InstantCommand(m_intakeSubsystem::intakeRunForward)
+    //     )
+    //     .onFalse(
+    //       new InstantCommand(m_intakeSubsystem::intakeStop)
+    //     );
   }
 
   public void resetPose(){

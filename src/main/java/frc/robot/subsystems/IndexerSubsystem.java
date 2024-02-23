@@ -4,6 +4,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //constants
 import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.IntakeConstants;
+
 //stuff for motors
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -13,7 +15,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 
 public class IndexerSubsystem extends SubsystemBase {
-    private CANSparkMax m_indexConveyorMotor = new CanSparkMax(IndexerConstants.kIndexerConveyorMotorPort, MotorType.kBrushed);
+    
+    CANSparkMax m_indexConveyorMotor = new CANSparkMax(IndexerConstants.kIndexerConveyorMotorPort, MotorType.kBrushed);
     private DigitalInput m_indexSensor = new DigitalInput(IndexerConstants.kIndexerSensorChannel);
 
     //constructor

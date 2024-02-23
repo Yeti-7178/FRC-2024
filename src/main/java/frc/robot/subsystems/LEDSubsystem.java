@@ -1,5 +1,4 @@
 package frc.robot.subsystems;
-
 //constants
 import frc.robot.Constants.LEDConstants;
 //WPI Library
@@ -49,9 +48,9 @@ public class LEDSubsystem {
     public void LEDYeti() {
         //I'd like to make a gradient from yeti blue (which I found to be about 0, 115, 255 RGB) to white
         double redValue = 0;
-        const double redValueIncrement = (255 - redValue) / LEDConstants.kLEDLength;
+        double redValueIncrement = (255 - redValue) / LEDConstants.kLEDLength;
         double greenValue = 115;
-        const double greenValueIncrement = (255 - greenValue) / LEDConstants.kLEDLength;
+        double greenValueIncrement = (255 - greenValue) / LEDConstants.kLEDLength;
 
         //update the LED Buffer
         for (int i = 0; i < LEDConstants.kLEDLength; i++) {
