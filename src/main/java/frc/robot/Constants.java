@@ -60,11 +60,21 @@ public final class Constants {
     public static final int kRearLeftTurningCanId = 9;
     public static final int kFrontRightTurningCanId = 5;
     public static final int kRearRightTurningCanId = 7;
+
+    // public static final int kFrontLeftDrivingCanId = 7;
+    // public static final int kRearLeftDrivingCanId = 5;
+    // public static final int kFrontRightDrivingCanId = 9;
+    // public static final int kRearRightDrivingCanId = 3;
+
+    // public static final int kFrontLeftTurningCanId = 6;
+    // public static final int kRearLeftTurningCanId = 4;
+    // public static final int kFrontRightTurningCanId = 8;
+    // public static final int kRearRightTurningCanId = 2;
   }
   public static final class IntakeConstants {
     public static final int KIntakeCanID = 20;
     public static final int kIntakeCurrentLimit = 20; // amps
-    public static final double kIntakeMotorSpeed = 0.5;
+    public static final double kIntakeMotorSpeed = 0.8;
 
   }
 
@@ -127,7 +137,7 @@ public final class Constants {
 
     //TODO: probably not super important, but we should look into how to properly calculate current limits.
     public static final int kDrivingMotorCurrentLimit = 40; // amps
-    public static final int kTurningMotorCurrentLimit = 20; // amps
+    public static final int kTurningMotorCurrentLimit = 5; // amps
   }
 
   public static final class HeadingConstants {
@@ -197,10 +207,39 @@ public final class Constants {
      */
     public static final int kDefaultPipeline = kAprilTagPipeline;
   }
+
   public static final class ShooterConstants{
     public static final int kUpperShooterMotorPortA = 20; //Needs to be changed
     public static final double kUpperShooterMotorSpeedA = 0.35; //Needs to be changed
     public static final int kUpperShooterMotorPortB = 21; //Needs to be changed
     public static final double kUpperShooterMotorSpeedB = 0.6; //Needs to be changed
+  }
+
+  public static final class IndexerConstants {
+    //establish all of these once the subsystem is actually wired up yk the deal
+    public static final int kIndexerConveyorMotorCanId = 0;
+    public static final int kIndexerSensorChannel = 0;
+    public static final double kIndexerConveyorStdSpeed = 0.5; //needs to be tested
+    public static final boolean kIndexerMotorInverted = false;
+  }
+
+  public static final class ClimbConstants {
+    //establish all of these once the LEDs are actually established yk the deal
+    //climb motor CAN IDs
+    public static final int kLeftClimbCanId = 0;
+    public static final int kRightClimbCanId = 0;
+    //speeds and configurations
+    public static final double kClimbMotorSpeed = 0.5;
+    public static final boolean kClimbLeftInverted = false;
+    public static final boolean kClimbRightInverted = false;
+    public static final IdleMode kClimbIdleMode = kBrake;
+  }
+
+  public static final class LEDConstants {
+    // establish all of these once the LEDs are actually established yk the deal
+    public static final int kLEDPort = 1;
+    public static final int kLEDLength = 0;
+
+
   }
 }

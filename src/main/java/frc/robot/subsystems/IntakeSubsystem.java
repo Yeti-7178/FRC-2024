@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem  extends SubsystemBase{
-    CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.KIntakeCanID, MotorType.kBrushless);
+    CANSparkMax m_intakeMotor = new CANSparkMax(IntakeConstants.KIntakeCanID, MotorType.kBrushed);
 
     public IntakeSubsystem()
     {
@@ -25,7 +25,7 @@ public class IntakeSubsystem  extends SubsystemBase{
     {
         m_intakeMotor.set(-IntakeConstants.kIntakeMotorSpeed);
     }
-    public void intakeRunStop()
+    public void intakeStop()
     {
         m_intakeMotor.set(0.0);
     }
