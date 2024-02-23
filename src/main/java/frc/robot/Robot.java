@@ -31,10 +31,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
-    //initialize the length of the LEDs, called here because it's an expensive task
-    //uncomment this once LEDs are added
-    // LEDSubsystem.SetLEDLength(LEDConstants.kLEDLength);
   }
 
   /**
