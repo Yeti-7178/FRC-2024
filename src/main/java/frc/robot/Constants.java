@@ -210,10 +210,22 @@ public final class Constants {
 
   public static final class IndexerConstants {
     //establish all of these once the subsystem is actually wired up yk the deal
-    public static final int kIndexerConveyorMotorPort = 0;
+    public static final int kIndexerConveyorMotorCanId = 0;
     public static final int kIndexerSensorChannel = 0;
     public static final double kIndexerConveyorStdSpeed = 0.5; //needs to be tested
     public static final boolean kIndexerMotorInverted = false;
+  }
+
+  public static final class ClimbConstants {
+    //establish all of these once the LEDs are actually established yk the deal
+    //climb motor CAN IDs
+    public static final int kLeftClimbCanId = 0;
+    public static final int kRightClimbCanId = 0;
+    //speeds and configurations
+    public static final double kClimbMotorSpeed = 0.5;
+    public static final boolean kClimbLeftInverted = false;
+    public static final boolean kClimbRightInverted = false;
+    public static final IdleMode kClimbIdleMode = kBrake;
   }
 
   public static final class LEDConstants {
