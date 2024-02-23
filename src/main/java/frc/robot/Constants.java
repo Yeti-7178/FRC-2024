@@ -208,6 +208,13 @@ public final class Constants {
     public static final int kDefaultPipeline = kAprilTagPipeline;
   }
 
+  public static final class ShooterConstants{
+    public static final int kUpperShooterMotorPortA = 20; //Needs to be changed
+    public static final double kUpperShooterMotorSpeedA = 0.35; //Needs to be changed
+    public static final int kUpperShooterMotorPortB = 21; //Needs to be changed
+    public static final double kUpperShooterMotorSpeedB = 0.6; //Needs to be changed
+  }
+
   public static final class IndexerConstants {
     //establish all of these once the subsystem is actually wired up yk the deal
     public static final int kIndexerConveyorMotorCanId = 0;
@@ -232,6 +239,7 @@ public final class Constants {
     // establish all of these once the LEDs are actually established yk the deal
     public static final int kLEDPort = 1;
     public static final int kLEDLength = 0;
+
 
   }
 }
