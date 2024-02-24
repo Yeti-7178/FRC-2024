@@ -208,6 +208,13 @@ public final class Constants {
     public static final int kDefaultPipeline = kAprilTagPipeline;
   }
 
+
+  public static final class AmpConstants {
+    // ** these will need to be changed/established before testing **
+    public static final int kAmpSensorChannel = 1;
+    public static final int kPusherForwardPort = 1;
+    public static final int kPusherReversePort = 1;
+
   public static final class ShooterConstants{
     public static final int kUpperShooterMotorPortA = 20; //Needs to be changed
     public static final double kUpperShooterMotorSpeedA = 0.35; //Needs to be changed
@@ -239,6 +246,7 @@ public final class Constants {
     // establish all of these once the LEDs are actually established yk the deal
     public static final int kLEDPort = 1;
     public static final int kLEDLength = 0;
+
 
 
   }
