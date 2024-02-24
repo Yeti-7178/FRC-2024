@@ -20,6 +20,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 
 import frc.robot.Constants.DriveConstants;
@@ -30,31 +31,33 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.subsystems.SwerveModule;
+
 public class DriveSubsystem extends SubsystemBase {
   // Create Swerve Modules
   private final SwerveModule m_frontLeft = new SwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset,
-      ModuleConstants.kLeftFrontInverted);
+      ModuleConstants.kLeftFrontInverted, false);
 
   private final SwerveModule m_frontRight = new SwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset,
-      ModuleConstants.kRightFrontInverted);
+      ModuleConstants.kRightFrontInverted, false);
 
   private final SwerveModule m_rearLeft = new SwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset,
-      ModuleConstants.kLeftRearInverted);
+      ModuleConstants.kLeftRearInverted, true);
 
   private final SwerveModule m_rearRight = new SwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset,
-      ModuleConstants.kRightRearInverted);
+      ModuleConstants.kRightRearInverted, false);
 
   // The gyro sensor
   private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
@@ -110,7 +113,10 @@ public class DriveSubsystem extends SubsystemBase {
             Math.hypot(DriveConstants.kTrackWidth / 2, DriveConstants.kWheelBase / 2), // Drive base radius in meters. Distance from robot center to furthest module.
             new ReplanningConfig() // Default path replanning config. See the API for the options here
         ),
-        () -> false, // Parameter for whether to invert the paths or not (set to false for now)
+        () -> {
+          var alliance = DriverStation.getAlliance();
+          return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+        }, // Parameter for whether to invert the paths or not (set to false for now)
         this // Reference to this subsystem to set requirements
     );
   }
