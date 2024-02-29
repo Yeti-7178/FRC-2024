@@ -1,3 +1,6 @@
+package frc.robot.subsystems;
+
+
 //constants
 import frc.robot.Constants.AmpConstants;
 //for the code organization
@@ -6,6 +9,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DigitalInput;
 //for the pneumatics
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.Compressor;
 
 public class AmpSubsystem extends SubsystemBase {
@@ -15,9 +21,9 @@ public class AmpSubsystem extends SubsystemBase {
 
     //note - PneumaticsModuleType.CTREPCM means the pneumatic module that the solenoid will connect to/be 
     //controlled from is a CTRE Pneumatics Control Module, not a REV Pneumatics Hub (REVPH).
-    private DoubleSolenoid m_ampPusher = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, AmpConstants.kPusherForwardPort, AmpConstants.kPusherReversePort);
-    private Compressor m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-
+   
+    final Compressor m_compressor = new Compressor(AmpConstants.armPort, PneumaticsModuleType.CTREPCM);
+    private Solenoid m_ampPusher = new Solenoid(AmpConstants.kPneumaticsModuleID, PneumaticsModuleType.CTREPCM, AmpConstants.kPusherChannel);
 
     //functions yippee
     /* sensor functions */
@@ -27,15 +33,7 @@ public class AmpSubsystem extends SubsystemBase {
     }
 
     /* solenoid functions */
-    public void ampPusherOut() {
-        //set m_ampPusher forward to push the note into the amp
-        m_ampPusher.set(DoubleSolenoid.kForward);
-    }
-
-    public void ampPusherIn() {
-        //set m_ampPusher reverse to retract the pusher into the robot
-        m_ampPusher.set(DoubleSolenoid.kReverse);
-    }
+   
 
     public void ampToggle() {
         //toggle the amp's position. I don't expect this to be used unless we set a button for toggling the amp,
@@ -53,9 +51,13 @@ public class AmpSubsystem extends SubsystemBase {
         m_compressor.enableDigital();
     }
 
-    public double getCompressorPressure() {
+    public void getCompressorPressure() {
         //I don't know if this is supported by our compressor
         m_compressor.getPressure();
+    }
+    @Override
+    public void periodic() {
+
     }
 
 }

@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 //constants
-import frc.robot.constants.ClimbConstants;
+import frc.robot.Constants.ClimbConstants;
 
 public class ClimbSubsystem extends SubsystemBase {
-    private static final m_leftClimbMotor = new CANSparkMax(ClimbConstants.kLeftClimbCanId, MotorType.kBrushless);
-    private static final m_rightClimbMotor = new CANSparkMax(ClimbConstants.kRightClimbCanId, MotorType.kBrushless);
+    private static final CANSparkMax m_leftClimbMotor = new CANSparkMax(ClimbConstants.kLeftClimbCanId, MotorType.kBrushless);
+    private static final CANSparkMax m_rightClimbMotor = new CANSparkMax(ClimbConstants.kRightClimbCanId, MotorType.kBrushless);
 
-    public ClimbSubsystem {
+    public ClimbSubsystem() {
         m_leftClimbMotor.restoreFactoryDefaults();
         m_rightClimbMotor.restoreFactoryDefaults();
         m_leftClimbMotor.setIdleMode(ClimbConstants.kClimbIdleMode);
@@ -42,19 +42,19 @@ public class ClimbSubsystem extends SubsystemBase {
 
     //right motor
     public void climbRightUp() {
-        m_RightClimbMotor.set(ClimbConstants.kClimbMotorSpeed);
+        m_rightClimbMotor.set(ClimbConstants.kClimbMotorSpeed);
     }
 
     public void climbRightDown() {
-        m_RightClimbMotor.set(-ClimbConstants.kClimbMotorSpeed); 
+        m_rightClimbMotor.set(-ClimbConstants.kClimbMotorSpeed); 
     }
 
     public void climbRightStop() {
-        m_RightClimbMotor.stopMotor();
+        m_rightClimbMotor.stopMotor();
     }
 
     public void climbRightSetSpeed(double speed) {
-        m_RightClimbMotor.set(speed);
+        m_rightClimbMotor.set(speed);
     }
 
     //both motors

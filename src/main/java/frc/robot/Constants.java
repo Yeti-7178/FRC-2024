@@ -30,8 +30,8 @@ public final class Constants {
     public static final double kMaxSpeedMetersPerSecond = 5;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
-    public static final double kMagnitudeSlewRate = 1.8 * kMaxSpeedMetersPerSecond; // meters per second^2
-    public static final double kRotationalSlewRate = 2.0 * kMaxAngularSpeed;        // radians per second^2
+    public static final double kMagnitudeSlewRate = 5 * kMaxSpeedMetersPerSecond; // meters per second^2
+    public static final double kRotationalSlewRate = 5 * kMaxAngularSpeed;        // radians per second^2
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(21);
@@ -51,15 +51,15 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = 0;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 2;
-    public static final int kRearLeftDrivingCanId = 8;
-    public static final int kFrontRightDrivingCanId = 4;
-    public static final int kRearRightDrivingCanId = 6;
+    public static final int kFrontLeftDrivingCanId = 7;
+    public static final int kRearLeftDrivingCanId = 5;
+    public static final int kFrontRightDrivingCanId = 9;
+    public static final int kRearRightDrivingCanId = 3;
 
-    public static final int kFrontLeftTurningCanId = 3;
-    public static final int kRearLeftTurningCanId = 9;
-    public static final int kFrontRightTurningCanId = 5;
-    public static final int kRearRightTurningCanId = 7;
+    public static final int kFrontLeftTurningCanId = 6;
+    public static final int kRearLeftTurningCanId = 4;
+    public static final int kFrontRightTurningCanId = 8;
+    public static final int kRearRightTurningCanId = 2;
 
     // public static final int kFrontLeftDrivingCanId = 7;
     // public static final int kRearLeftDrivingCanId = 5;
@@ -72,18 +72,13 @@ public final class Constants {
     // public static final int kRearRightTurningCanId = 2;
   }
   public static final class IntakeConstants {
-    public static final int KIntakeCanID = 20;
+    public static final int KIntakeCanID = 16;
     public static final int kIntakeCurrentLimit = 20; // amps
-    public static final double kIntakeMotorSpeed = 0.8;
+    public static final double kIntakeMotorSpeed = 1;
 
   }
 
   public static final class ModuleConstants {
-    // The MAXSwerve module can be configured with one of three pinion gears: 12T, 13T, or 14T.
-    // This changes the drive speed of the module (a pinion gear with more teeth will result in a
-    // robot that drives faster).
-    //public static final int kDrivingMotorPinionTeeth = 14; //done
-
     // Inverts the turning encoder.
     public static final boolean kTurningEncoderInverted = false;
 
@@ -91,9 +86,6 @@ public final class Constants {
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
-
-    // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
-    //public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
 
     // The L1 MK4 and MK4i modules have a gear ratio of 8.14:1 on the drive wheels.
     public static final double kDrivingMotorReduction = 8.14;
@@ -126,22 +118,36 @@ public final class Constants {
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;
 
-    //inversion of drive motors
-    public static final boolean kLeftFrontInverted = false;
-    public static final boolean kLeftRearInverted = false;
-    public static final boolean kRightFrontInverted = true;
-    public static final boolean kRightRearInverted = false;
+    // Inversion of drive motors
+    // This will vary depending on how your wheels are oriented when you zero them.
+    public static final boolean kLeftFrontInverted = true;
+    public static final boolean kLeftRearInverted = true;
+    public static final boolean kRightFrontInverted = false;
+    public static final boolean kRightRearInverted = true;
+
+    // Inversion of turning motors
+    // Unless oriented differently, all of your turning motors should spin in the same direction.
+    public static final boolean kTurningMotorsInverted = true;
 
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
     //TODO: probably not super important, but we should look into how to properly calculate current limits.
-    public static final int kDrivingMotorCurrentLimit = 40; // amps
-    public static final int kTurningMotorCurrentLimit = 5; // amps
+    public static final int kDrivingMotorCurrentLimit = 35; // amps
+    public static final int kTurningMotorCurrentLimit = 20; // amps
+  }
+  public static final class FieldConstants{
+    /** X axis: long side */
+    public static final double kFieldWidthMeters = 16.52;
+    /** Y axis: short side */
+    public static final double KFieldHeightMeters = 8.2;
+    
+    public static final double kSpeakerX = 20;
+    public static final double kSpeakerY = 20;
   }
 
   public static final class HeadingConstants {
-    public static final boolean kGyroReversed = false;
+    public static final boolean kGyroReversed = true;
 
     // This is used for making the robot face a certain direction
     public static final double kHeadingP = 0.05;
@@ -212,19 +218,22 @@ public final class Constants {
   public static final class AmpConstants {
     // ** these will need to be changed/established before testing **
     public static final int kAmpSensorChannel = 1;
-    public static final int kPusherForwardPort = 1;
-    public static final int kPusherReversePort = 1;
-
+    public static final int kPusherChannel = 0;
+    public static final int kPneumaticsModuleID = 10;
+    // public static final int kPusherReversePort = 1;
+    public static int armPort = 10;
+  }
   public static final class ShooterConstants{
     public static final int kUpperShooterMotorPortA = 20; //Needs to be changed
-    public static final double kUpperShooterMotorSpeedA = 0.35; //Needs to be changed
-    public static final int kUpperShooterMotorPortB = 21; //Needs to be changed
-    public static final double kUpperShooterMotorSpeedB = 0.6; //Needs to be changed
+    public static final double kUpperShooterMotorSpeedA = 1; //Needs to be changed
+    public static final int kUpperShooterMotorPortB = 19; //Needs to be changed
+    public static final double kUpperShooterMotorSpeedB = -1; //Needs to be changed
+     public static final int kIntakeCurrentLimit = 20; // amps
   }
-
+  
   public static final class IndexerConstants {
     //establish all of these once the subsystem is actually wired up yk the deal
-    public static final int kIndexerConveyorMotorCanId = 0;
+    public static final int kIndexerConveyorMotorCanId = 18;
     public static final int kIndexerSensorChannel = 0;
     public static final double kIndexerConveyorStdSpeed = 0.5; //needs to be tested
     public static final boolean kIndexerMotorInverted = false;
@@ -233,21 +242,19 @@ public final class Constants {
   public static final class ClimbConstants {
     //establish all of these once the LEDs are actually established yk the deal
     //climb motor CAN IDs
-    public static final int kLeftClimbCanId = 0;
-    public static final int kRightClimbCanId = 0;
+    public static final int kLeftClimbCanId = 14;
+    public static final int kRightClimbCanId = 15;
     //speeds and configurations
     public static final double kClimbMotorSpeed = 0.5;
-    public static final boolean kClimbLeftInverted = false;
+    public static final boolean kClimbLeftInverted = true;
     public static final boolean kClimbRightInverted = false;
-    public static final IdleMode kClimbIdleMode = kBrake;
+    public static final IdleMode kClimbIdleMode = IdleMode.kBrake;
   }
 
   public static final class LEDConstants {
     // establish all of these once the LEDs are actually established yk the deal
     public static final int kLEDPort = 1;
     public static final int kLEDLength = 0;
-
-
 
   }
 }

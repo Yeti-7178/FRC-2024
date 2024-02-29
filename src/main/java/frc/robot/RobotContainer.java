@@ -22,15 +22,21 @@ import frc.robot.commands.vision.AutoAlignAutoAim;
 import frc.robot.commands.vision.AutoAlignCircle;
 import frc.robot.commands.vision.DefaultLimelightPipeline;
 import frc.robot.commands.vision.UpdateOdometry;
+import frc.robot.subsystems.AmpSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.commands.indexing.AutoIndex;
+import frc.robot.commands.indexing.AutoIndexAmp;
+import frc.robot.commands.shooter.AutoAlignAndShoot;
 import frc.robot.subsystems.IndexerSubsystem;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 import java.util.Map;
 
@@ -43,10 +49,12 @@ import java.util.Map;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  // private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
-  // private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-  // private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
-
+  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
+  private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
   // uncomment this once LEDs are addded
   // private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
 
@@ -64,20 +72,23 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
+
+    m_ampSubsystem.enableCompressor();
+    m_shooterSubsystem.setSlowSpeed();
     // Configure limelight default pipeline
-    // m_visionSubsystem.setDefaultCommand(new DefaultLimelightPipeline(m_visionSubsystem));
+    m_visionSubsystem.setDefaultCommand(new DefaultLimelightPipeline(m_visionSubsystem));
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
-            () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                true, true),
-            m_robotDrive));
+          () -> m_robotDrive.drive(
+            MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+            -MathUtil.applyDeadband(-m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+            MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
+            true, true),
+        m_robotDrive));
         // new RunCommand(
         //     () -> m_robotDrive.drive(
         //         -MathUtil.applyDeadband(m_driverController.getY(), OIConstants.kDriveDeadband),
@@ -87,9 +98,10 @@ public class RobotContainer {
         //     m_robotDrive));
     
     // "registerCommand" lets pathplanner identify our commands
-    // Here's the autoalign as an example:
-    // NamedCommands.registerCommand("Auto Align", new AutoAlignAutoAim(m_visionSubsystem, m_robotDrive));
-    // NamedCommands.registerCommand("AutoIndex", new AutoIndex(m_indexerSubsystem, m_intakeSubsystem));
+    //Here's the autoalign as an example:
+    NamedCommands.registerCommand("Auto Align", new AutoAlignAutoAim(m_visionSubsystem, m_robotDrive));
+    
+    NamedCommands.registerCommand("AutoIndex", new AutoIndex(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
 
     //Adding options to the sendable chooser
     m_autonChooser.setDefaultOption("Template Auton", new TemplateAuton(m_robotDrive));
@@ -101,8 +113,9 @@ public class RobotContainer {
 
     // DEBUG: shuffleboard widget for resetting pose. For now I'm using a default pose of 0, 0 and a rotation of 0
     Shuffleboard.getTab("Swerve").add("reset pose", new InstantCommand(this::resetPose)).withSize(2, 1);
+    Shuffleboard.getTab("Swerve").add("deploy chop", new InstantCommand((m_ampSubsystem::ampToggle)));
+    Shuffleboard.getTab("Sensor").add("Sensor", m_ampSubsystem.getAmpIndex());
 
-    // Shuffleboard.getTab("Vision").add("update odometry", new UpdateOdometry(m_robotDrive, m_visionSubsystem));
   }
 
   /**
@@ -144,29 +157,31 @@ public class RobotContainer {
               () -> m_driverController.getLeftX()
             )
         );
-    // new JoystickButton(m_driverController, Button.kA.value)
-    //     .toggleOnTrue(
-    //         new RobotGotoAngle(
-    //           m_robotDrive,
-    //           0,
-    //           () -> m_driverController.getY(),
-    //           () -> m_driverController.getX()
-    //         )
-    //     );
+
     
     //B button: sets gyro to 90 degrees
     new JoystickButton(m_driverController, Button.kB.value)
         .onTrue(new InstantCommand(
             () -> m_robotDrive.setHeading(90),
             m_robotDrive));
-    // new JoystickButton(m_opperatorController, Button.kRightBumper.value)
-    //     .whileTrue
-    //     (
-    //       new InstantCommand(m_intakeSubsystem::intakeRunForward)
-    //     )
-    //     .onFalse(
-    //       new InstantCommand(m_intakeSubsystem::intakeStop)
-    //     );
+
+    new JoystickButton(m_opperatorController, Button.kB.value)
+        .onTrue(new AutoIndex(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+    new JoystickButton(m_opperatorController, Button.kA.value)
+        .onTrue(new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
+    new JoystickButton(m_opperatorController, Button.kY.value)
+        .onTrue(new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
+    new JoystickButton(m_opperatorController, Button.kX.value)
+        .onTrue(new InstantCommand(() -> m_ampSubsystem.ampToggle()))
+        .onFalse(new InstantCommand(() -> m_ampSubsystem.ampToggle()));
+    new JoystickButton(m_opperatorController, Button.kRightBumper.value)
+        .onTrue(new InstantCommand(() -> m_climbSubsystem.climbUp()))
+        .onFalse(new InstantCommand(() -> m_climbSubsystem.climbStop()));
+    new JoystickButton(m_opperatorController, Button.kLeftBumper.value)
+        .onTrue(new InstantCommand(() -> m_climbSubsystem.climbDown()))
+        .onFalse(new InstantCommand(() -> m_climbSubsystem.climbStop()));
+
+
   }
 
   public void resetPose(){

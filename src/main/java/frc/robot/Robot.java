@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 // for LEDS
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.Constants.LEDConstants;
+import frc.robot.subsystems.AmpSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to

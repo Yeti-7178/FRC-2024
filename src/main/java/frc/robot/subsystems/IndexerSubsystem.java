@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 
 public class IndexerSubsystem extends SubsystemBase {
-    private CANSparkMax m_indexConveyorMotor = new CanSparkMax(IndexerConstants.kIndexerConveyorMotorCanId, MotorType.kBrushed);
+    private CANSparkMax m_indexConveyorMotor = new CANSparkMax(IndexerConstants.kIndexerConveyorMotorCanId, MotorType.kBrushed);
     private DigitalInput m_indexSensor = new DigitalInput(IndexerConstants.kIndexerSensorChannel);
 
     //constructor
