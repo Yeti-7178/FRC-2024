@@ -291,7 +291,7 @@ public final class Constants {
     public static final int kLeftClimbCanId = 14;
     public static final int kRightClimbCanId = 15;
     //speeds and configurations
-    public static final double kClimbMotorSpeed = 0.5;
+    public static final double kClimbMotorSpeed = 0.9;
     public static final boolean kClimbLeftInverted = false;
     public static final boolean kClimbRightInverted = true;
     public static final IdleMode kClimbIdleMode = IdleMode.kBrake;

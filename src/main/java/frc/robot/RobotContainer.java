@@ -195,10 +195,10 @@ public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
         .onTrue(new InstantCommand(() -> m_ampSubsystem.ampToggle()))
         .onFalse(new InstantCommand(() -> m_ampSubsystem.ampToggle()));
     new JoystickButton(m_opperatorController, Button.kRightBumper.value)
-        .onTrue(new RunCommand(() -> m_climbSubsystem.climbUp()))
+        .whileTrue(new RunCommand(() -> m_climbSubsystem.climbUp()))
         .onFalse(new InstantCommand(() -> m_climbSubsystem.climbStop()));
     new JoystickButton(m_opperatorController, Button.kLeftBumper.value)
-        .onTrue(new RunCommand(() -> m_climbSubsystem.climbDown()))
+        .whileTrue(new RunCommand(() -> m_climbSubsystem.climbDown()))
         .onFalse(new InstantCommand(() -> m_climbSubsystem.climbStop()));
 
 
