@@ -34,7 +34,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.commands.indexing.AutoIndex;
 import frc.robot.commands.indexing.AutoIndexAmp;
+import frc.robot.commands.indexing.AutoIndexAuton;
 import frc.robot.commands.shooter.AutoAlignAndShoot;
+import frc.robot.commands.shooter.AutoAlignAndShootAuton;
 import frc.robot.subsystems.IndexerSubsystem;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
@@ -78,6 +80,7 @@ public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
     // Configure limelight default pipeline
     m_visionSubsystem.setDefaultCommand(new DefaultLimelightPipeline(m_visionSubsystem));
 
+
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
@@ -101,11 +104,21 @@ public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
     //Here's the autoalign as an example:
     NamedCommands.registerCommand("Auto Align", new AutoAlignAutoAim(m_visionSubsystem, m_robotDrive));
     
-    NamedCommands.registerCommand("AutoIndex", new AutoIndex(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+    NamedCommands.registerCommand("AutoIndex", new AutoIndexAuton(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+    NamedCommands.registerCommand("AutoShoot", new AutoAlignAndShootAuton(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
+
 
     //Adding options to the sendable chooser
-    m_autonChooser.setDefaultOption("Template Auton", new TemplateAuton(m_robotDrive));
-    m_autonChooser.addOption("Path Planner", new PathPlannerAuto("test"));
+    
+    m_autonChooser.setDefaultOption("Amp Side", new PathPlannerAuto("Amp Side"));
+    m_autonChooser.addOption("Midle", new PathPlannerAuto("Mid Side"));
+    m_autonChooser.addOption("Other side", new PathPlannerAuto("Other Start"));
+    m_autonChooser.addOption("test", new PathPlannerAuto("COMMANDTESTER"));
+    m_autonChooser.addOption("New Auton", new PathPlannerAuto("New Auto"));
+    m_autonChooser.addOption("DoNothingAmp", new PathPlannerAuto("doNAmp"));
+    m_autonChooser.addOption("DoNothingMid", new PathPlannerAuto("doNMid"));
+    m_autonChooser.addOption("DoNothingOther", new PathPlannerAuto("doNOther"));
+    m_autonChooser.addOption("MoveAuto", new PathPlannerAuto("MoveAuto"));
 
     // Put chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2, 1)
@@ -115,6 +128,10 @@ public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
     Shuffleboard.getTab("Swerve").add("reset pose", new InstantCommand(this::resetPose)).withSize(2, 1);
     Shuffleboard.getTab("Swerve").add("deploy chop", new InstantCommand((m_ampSubsystem::ampToggle)));
     Shuffleboard.getTab("Sensor").add("Sensor", m_ampSubsystem.getAmpIndex());
+        
+    //sensor debugging
+   Shuffleboard.getTab("Sensor").add("Top right sensor", m_climbSubsystem.getTopRightLimit());
+
 
   }
 
@@ -167,6 +184,9 @@ public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
 
     new JoystickButton(m_opperatorController, Button.kB.value)
         .onTrue(new AutoIndex(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+        new JoystickButton(m_opperatorController, Button.kStart.value)
+          .onTrue(new InstantCommand(m_intakeSubsystem::intakeStop));
+        
     new JoystickButton(m_opperatorController, Button.kA.value)
         .onTrue(new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
     new JoystickButton(m_opperatorController, Button.kY.value)
@@ -175,10 +195,10 @@ public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
         .onTrue(new InstantCommand(() -> m_ampSubsystem.ampToggle()))
         .onFalse(new InstantCommand(() -> m_ampSubsystem.ampToggle()));
     new JoystickButton(m_opperatorController, Button.kRightBumper.value)
-        .onTrue(new InstantCommand(() -> m_climbSubsystem.climbUp()))
+        .onTrue(new RunCommand(() -> m_climbSubsystem.climbUp()))
         .onFalse(new InstantCommand(() -> m_climbSubsystem.climbStop()));
     new JoystickButton(m_opperatorController, Button.kLeftBumper.value)
-        .onTrue(new InstantCommand(() -> m_climbSubsystem.climbDown()))
+        .onTrue(new RunCommand(() -> m_climbSubsystem.climbDown()))
         .onFalse(new InstantCommand(() -> m_climbSubsystem.climbStop()));
 
 

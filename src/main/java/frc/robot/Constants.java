@@ -6,6 +6,8 @@ package frc.robot;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -136,15 +138,53 @@ public final class Constants {
     public static final int kDrivingMotorCurrentLimit = 35; // amps
     public static final int kTurningMotorCurrentLimit = 20; // amps
   }
-  public static final class FieldConstants{
+   public static final class FieldConstants {
     /** X axis: long side */
-    public static final double kFieldWidthMeters = 16.52;
+    public static final double kFieldWidthMeters = 16.54175;
     /** Y axis: short side */
-    public static final double KFieldHeightMeters = 8.2;
+    public static final double kFieldHeightMeters = 8.2;
     
-    public static final double kSpeakerX = 20;
-    public static final double kSpeakerY = 20;
+    // Position of the speaker on the field (in meters)
+    public static final Translation2d kSpeakerPosition = new Translation2d(
+      0, 5.53 
+    );
+    // Height to the bottom lip of speaker
+    public static final double kSpeakerHeightInches = 78.129;
+
+    public static final Pose2d kAmpScoringPosition = new Pose2d(
+      1.83,
+      7.67,
+      Rotation2d.fromDegrees(90)
+    );
+
+    public static final Pose2d kSpeakerScoringPosition = new Pose2d(
+      1.38,
+      5.53,
+      Rotation2d.fromDegrees(180)
+    );
+    
+    // TODO: figure out trap constants
+    public static final Pose2d kTrapPositionAmpSide = new Pose2d(
+      0,
+      0,
+      Rotation2d.fromDegrees(0)
+    );
+    public static final Pose2d kTrapPositionSourceSide = new Pose2d(
+      0,
+      0,
+      Rotation2d.fromDegrees(0)
+    );
+    public static final Pose2d kTrapPositionCenterStage = new Pose2d(
+      0,
+      0,
+      Rotation2d.fromDegrees(0)
+    );
+    public static final double kTrapHeight = 0;
+
+    public static final double kTrapCenterY = 4.1;
+    public static final double kTrapCenterStageX = 5.63;
   }
+
 
   public static final class HeadingConstants {
     public static final boolean kGyroReversed = true;
@@ -156,6 +196,12 @@ public final class Constants {
     public static final double kHeadingMinOutput = -0.5;
     public static final double kHeadingMaxOutput = 0.5;
     public static final double kHeadingTolerance = 1;
+
+    public static final double kTranslationP = 5;
+    public static final double kTranslationI = 0;
+    public static final double kTranslationD = 0;
+    public static final double kTranslationMaxOutput = 0.5; // Percent // TODO: remember to set this to 1 after testing
+    public static final double kTranslationTolerance = Units.inchesToMeters(3); // Meters
   }
 
   public static final class OIConstants {
@@ -246,9 +292,19 @@ public final class Constants {
     public static final int kRightClimbCanId = 15;
     //speeds and configurations
     public static final double kClimbMotorSpeed = 0.5;
-    public static final boolean kClimbLeftInverted = true;
-    public static final boolean kClimbRightInverted = false;
+    public static final boolean kClimbLeftInverted = false;
+    public static final boolean kClimbRightInverted = true;
     public static final IdleMode kClimbIdleMode = IdleMode.kBrake;
+    //limit switches IDs and inversions
+    public static final boolean kTopLeftLimitInverted = true;
+    public static final boolean kBottomLeftLimitInverted = true;
+    public static final boolean kTopRightLimitInverted = true;
+    public static final boolean kBottomRightLimitInverted = true;
+    public static final int kTopLeftLimitChannel = 2;
+    public static final int kBottomLeftLimitChannel = 5;
+    public static final int kTopRightLimitChannel = 4;
+    public static final int kBottomRightLimitChannel = 3;
+
   }
 
   public static final class LEDConstants {

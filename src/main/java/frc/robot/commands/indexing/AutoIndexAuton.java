@@ -9,14 +9,12 @@ import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //bc it's a command
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
 
-public class AutoIndex extends Command {
+public class AutoIndexAuton extends Command {
     
     //my first simple command!!!11!1!1!
     
@@ -27,7 +25,7 @@ public class AutoIndex extends Command {
 
     private boolean m_complete = false;
 
-    public AutoIndex(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter) {
+    public AutoIndexAuton(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter) {
         m_indexerSubsystem = indexer;
         m_intakeSubsystem = intake;
         m_shooterSubsystem = shooter;
@@ -61,11 +59,10 @@ public class AutoIndex extends Command {
         } 
         else
         {
-            m_intakeSubsystem.intakeRunBackwards();
+            m_intakeSubsystem.intakeStop();
             m_indexerSubsystem.stopIndexConveyor();
-            new WaitCommand(.5);
-            m_intakeSubsystem.intakeStop();    
             m_complete = true;
+            
         }   
     }
 

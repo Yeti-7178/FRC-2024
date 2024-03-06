@@ -14,6 +14,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 
 import java.util.Map;
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -26,8 +28,10 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.HeadingConstants;
 import frc.robot.Constants.ModuleConstants;
+import frc.utils.FieldUtils;
 import frc.utils.OdometryUtils;
 import frc.utils.SwerveUtils;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
@@ -73,7 +77,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Shuffleboard objects
   private final ShuffleboardTab swerveTab = Shuffleboard.getTab("Swerve");
-  private final SimpleWidget AllianceWidget;
+ 
 
   // Odometry class for tracking robot pose
   private final SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -89,29 +93,47 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
+   
+
     // NOTE: is this really necessary??
     m_gyro.enableLogging(true);
-
-    // Shuffleboard values
-    swerveTab.addDouble("Robot Heading", () -> getHeading());
-    
+   
+    // Widgets for swerve module angles 
     swerveTab.addDouble("frontLeft angle", () -> SwerveUtils.angleConstrain(m_frontLeft.getPosition().angle.getDegrees()));
+      //.withPosition(0, 0);
     swerveTab.addDouble("frontRight angle", () -> SwerveUtils.angleConstrain(m_frontRight.getPosition().angle.getDegrees()));
+      //.withPosition(1, 0);
     swerveTab.addDouble("rearLeft angle", () -> SwerveUtils.angleConstrain(m_rearLeft.getPosition().angle.getDegrees()));
+      //.withPosition(0, 1);
     swerveTab.addDouble("rearRight angle", () -> SwerveUtils.angleConstrain(m_rearRight.getPosition().angle.getDegrees()));
-    swerveTab.add("Field", m_field);
+      //.withPosition(1, 1);
+
+    // Gyro widget
+    swerveTab.addDouble("Robot Heading", () -> getHeading())
+      .withWidget(BuiltInWidgets.kGyro)
+      .withSize(2, 2)
+      .withProperties(Map.of(
+        "Counter Clockwise", true));
+    
+    // Field widget for displaying odometry estimation
+    swerveTab.add("Field", m_field)
+      .withSize(6, 3);
     
     swerveTab.addDouble("robot X", () -> getPose().getX());
     swerveTab.addDouble("robot Y", () -> getPose().getY());
+
+    // Gyro values for testing
+    swerveTab.addDouble("gyro pitch", () -> m_gyro.getPitch());
+    swerveTab.addDouble("gyro roll", () -> m_gyro.getRoll());
     
     // Configure the AutoBuilder
     AutoBuilder.configureHolonomic(
-        this::getPose, // Robot pose supplier
-        this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+        () -> FieldUtils.flipGlobalBlue(getPose()), // Robot pose supplier
+        (Pose2d thing) -> resetOdometry(FieldUtils.flipGlobalBlue(thing)), // Method to reset odometry (will be called if your auto has a starting pose)
         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+            new PIDConstants(HeadingConstants.kTranslationP, HeadingConstants.kTranslationI, HeadingConstants.kTranslationD), // Translation PID constants
             new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
             DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
             // Using pythagoras's theorem to find distance from robot center to module
@@ -119,11 +141,11 @@ public class DriveSubsystem extends SubsystemBase {
             new ReplanningConfig() // Default path replanning config. See the API for the options here
         ),
         // Parameter for whether to invert the paths for red alliance (returns false if alliance is invalid)
-        () -> OdometryUtils.getAlliance() == Alliance.Red, 
+        () -> FieldUtils.isRedAlliance(), 
         this // Reference to this subsystem to set requirements
     );
 
-    AllianceWidget = swerveTab.add("Alliance", true);
+    
   }
 
   @Override
@@ -147,26 +169,26 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     // Widget that shows color of alliance
-    if (OdometryUtils.getAlliance(true) == null) {
-      AllianceWidget.withProperties(Map.of(
-          "Color when true", "Gray"
-        ));
-    }
-    else {
-      switch (OdometryUtils.getAlliance(false)) {
-        case Blue:
-          AllianceWidget.withProperties(Map.of(
-            "Color when true", "Blue"
-          ));
-          break;
+    // if (OdometryUtils.getAlliance(true) == null) {
+    //   AllianceWidget.withProperties(Map.of(
+    //       "Color when true", "Gray"
+    //     ));
+    // }
+    // else {
+    //   switch (OdometryUtils.getAlliance(false)) {
+    //     case Blue:
+    //       AllianceWidget.withProperties(Map.of(
+    //         "Color when true", "Blue"
+    //       ));
+    //       break;
         
-        case Red:
-          AllianceWidget.withProperties(Map.of(
-            "Color when true", "Red"
-          ));
-          break;
-      }  
-    }
+    //     case Red:
+    //       AllianceWidget.withProperties(Map.of(
+    //         "Color when true", "Red"
+    //       ));
+    //       break;
+    //   }  
+    // }
     
   }
 

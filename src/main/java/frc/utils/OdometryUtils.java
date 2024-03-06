@@ -20,7 +20,7 @@ public class OdometryUtils {
     public static Pose2d restrictPose(Pose2d pose){
         return new Pose2d(
             MathUtil.clamp(pose.getX(), 0, FieldConstants.kFieldWidthMeters),
-            MathUtil.clamp(pose.getY(), 0, FieldConstants.KFieldHeightMeters),
+            MathUtil.clamp(pose.getY(), 0, FieldConstants.kFieldHeightMeters),
             pose.getRotation()
         );
     }
@@ -93,7 +93,7 @@ public class OdometryUtils {
     public static Pose2d redWidgetFlip(Pose2d pose){
         return new Pose2d(
             FieldConstants.kFieldWidthMeters-pose.getX(),
-            FieldConstants.KFieldHeightMeters-pose.getY(),
+            FieldConstants.kFieldHeightMeters-pose.getY(),
             new Rotation2d(pose.getRotation().getRadians()-Math.PI)
         );
     }
@@ -106,7 +106,7 @@ public class OdometryUtils {
     public static Translation2d flipRed(Translation2d position){
         return new Translation2d(
             position.getX(),
-            FieldConstants.KFieldHeightMeters-position.getY()
+            FieldConstants.kFieldHeightMeters-position.getY()
         );
     }
     
