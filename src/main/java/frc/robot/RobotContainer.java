@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.OIConstants;
@@ -55,7 +56,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
+  public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
   // uncomment this once LEDs are addded
   // private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
@@ -119,6 +120,7 @@ public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
     m_autonChooser.addOption("DoNothingMid", new PathPlannerAuto("doNMid"));
     m_autonChooser.addOption("DoNothingOther", new PathPlannerAuto("doNOther"));
     m_autonChooser.addOption("MoveAuto", new PathPlannerAuto("MoveAuto"));
+    m_autonChooser.addOption("Andy testing", new PathPlannerAuto("Andy auto"));
 
     // Put chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2, 1)
@@ -182,6 +184,11 @@ public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
             () -> m_robotDrive.setHeading(90),
             m_robotDrive));
 
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whileTrue(new RunCommand(() -> m_driverController.setRumble(RumbleType.kBothRumble, 0.5)))
+      .whileFalse(new InstantCommand(() -> m_driverController.setRumble(RumbleType.kBothRumble, 0)));
+
+    /* OPERATOR CONTROLLER */
     new JoystickButton(m_opperatorController, Button.kB.value)
         .onTrue(new AutoIndex(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
         new JoystickButton(m_opperatorController, Button.kStart.value)

@@ -116,8 +116,8 @@ public class DriveSubsystem extends SubsystemBase {
         "Counter Clockwise", true));
     
     // Field widget for displaying odometry estimation
-    swerveTab.add("Field", m_field)
-      .withSize(6, 3);
+    swerveTab.add("Field", m_field);
+      //.withSize(6, 3);
     
     swerveTab.addDouble("robot X", () -> getPose().getX());
     swerveTab.addDouble("robot Y", () -> getPose().getY());
@@ -127,9 +127,12 @@ public class DriveSubsystem extends SubsystemBase {
     swerveTab.addDouble("gyro roll", () -> m_gyro.getRoll());
     
     // Configure the AutoBuilder
+    // What I might do is remove any alliance-relative poses so that we're always relative to the blue alliance origin.
+    // This includes changing the second and third arguments to remove the flipGlobalBlue, and I may also change resetOdometry to not
+    // require a pose. I haven't done this yet, though.
     AutoBuilder.configureHolonomic(
-        () -> FieldUtils.flipGlobalBlue(getPose()), // Robot pose supplier
-        (Pose2d thing) -> resetOdometry(FieldUtils.flipGlobalBlue(thing)), // Method to reset odometry (will be called if your auto has a starting pose)
+        () -> getPose(), // Robot pose supplier
+        (Pose2d thing) -> resetOdometry(thing), // Method to reset odometry (will be called if your auto has a starting pose)
         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
@@ -379,5 +382,17 @@ public class DriveSubsystem extends SubsystemBase {
           speeds.omegaRadiansPerSecond / DriveConstants.kMaxAngularSpeed, 
           false, 
           false);
+  }
+
+  // FOR TELEOP ONLY. I'm not sure how else to do this
+  private boolean teleopIsFieldRelative = true;
+  public void teleopFieldRelativeToggle() {
+    teleopIsFieldRelative = !teleopIsFieldRelative;
+  }
+
+  public void driveInTeleop() {
+    if (teleopIsFieldRelative) {
+      
+    }
   }
 }
