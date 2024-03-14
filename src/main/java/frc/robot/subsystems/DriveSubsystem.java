@@ -165,6 +165,8 @@ public class DriveSubsystem extends SubsystemBase {
     
     // Update field widget
     if (OdometryUtils.getAlliance() == Alliance.Red) {
+      // see about undoing the redWidgetFlip here so we can see if what the robot sees the pose is 
+      // when on the red alliance is actually what we want
       m_field.setRobotPose(OdometryUtils.redWidgetFlip(getPose()));
     }
     else {
@@ -384,6 +386,7 @@ public class DriveSubsystem extends SubsystemBase {
           false);
   }
 
+  /* I commented all of this out because I don't think it's the proper way to do it
   // FOR TELEOP ONLY. I'm not sure how else to do this
   private boolean teleopIsFieldRelative = true;
   public void teleopFieldRelativeToggle() {
@@ -395,4 +398,5 @@ public class DriveSubsystem extends SubsystemBase {
       
     }
   }
+  */
 }

@@ -89,7 +89,7 @@ public class RobotContainer {
         new RunCommand(
           () -> m_robotDrive.drive(
             MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-            -MathUtil.applyDeadband(-m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+            -MathUtil.applyDeadband(-m_driverController.getLeftX(), OIConstants.kDriveDeadband), //why are there two negatives here?
             MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
             true, true),
         m_robotDrive));
