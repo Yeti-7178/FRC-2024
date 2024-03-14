@@ -379,9 +379,9 @@ public class DriveSubsystem extends SubsystemBase {
    */
   private void driveRobotRelative(ChassisSpeeds speeds){
     // This takes the velocities and converts them into precentages (-1 to 1)
-    drive((speeds.vxMetersPerSecond / DriveConstants.kMaxSpeedMetersPerSecond), 
-          (speeds.vyMetersPerSecond / DriveConstants.kMaxSpeedMetersPerSecond), 
-          speeds.omegaRadiansPerSecond / DriveConstants.kMaxAngularSpeed, 
+    drive((-speeds.vxMetersPerSecond / DriveConstants.kMaxSpeedMetersPerSecond), 
+          (-speeds.vyMetersPerSecond / DriveConstants.kMaxSpeedMetersPerSecond), 
+          -speeds.omegaRadiansPerSecond / DriveConstants.kMaxAngularSpeed, 
           false, 
           false);
   }
