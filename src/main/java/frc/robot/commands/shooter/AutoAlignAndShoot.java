@@ -32,8 +32,8 @@ public class AutoAlignAndShoot extends ParallelCommandGroup {
                 (
                     new ParallelCommandGroup
                     (
-                        new InstantCommand(m_shooterSubsystem::shooterOn)
-                        //new WaitCommand(2)
+                        new InstantCommand(m_shooterSubsystem::shooterOn),
+                        new WaitCommand(.25)
                     ),
                    new InstantCommand(m_indexerSubsystem::runConveyorForward),
                    new WaitCommand(2),
