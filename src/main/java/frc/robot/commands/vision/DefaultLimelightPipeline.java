@@ -38,7 +38,7 @@ public class DefaultLimelightPipeline extends Command {
     @Override
     public void initialize(){
         if(m_visionSubsystem.getPipeline() != VisionConstants.kDefaultPipeline){
-            m_visionSubsystem.setPipeline(VisionConstants.kDefaultPipeline);
+            //m_visionSubsystem.setPipeline(VisionConstants.kDefaultPipeline);
         }
     }
 

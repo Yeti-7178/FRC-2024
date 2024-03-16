@@ -53,6 +53,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+  //private final VisionSubsystem m_visionCoralSubsystem = new VisionSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
@@ -106,7 +107,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Auto Align", new AutoAlignAutoAim(m_visionSubsystem, m_robotDrive));
     
     NamedCommands.registerCommand("AutoIndex", new AutoIndexAuton(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
-    NamedCommands.registerCommand("AutoShoot", new AutoAlignAndShootAuton(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
+    NamedCommands.registerCommand("AutoShoot", new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
 
 
     //Adding options to the sendable chooser
@@ -132,7 +133,7 @@ public class RobotContainer {
     Shuffleboard.getTab("Sensor").add("Sensor", m_ampSubsystem.getAmpIndex());
         
     //sensor debugging
-   Shuffleboard.getTab("Sensor").add("Top right sensor", m_climbSubsystem.getTopRightLimit());
+  //  Shuffleboard.getTab("Sensor").add("Top right sensor", m_climbSubsystem.getTopRightLimit());
 
 
   }
@@ -190,7 +191,7 @@ public class RobotContainer {
 
     /* OPERATOR CONTROLLER */
     new JoystickButton(m_opperatorController, Button.kB.value)
-        .onTrue(new AutoIndex(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+        .onTrue(new AutoIndex(m_indexerSubsystem, m_intakeSubsystem));
         new JoystickButton(m_opperatorController, Button.kStart.value)
           .onTrue(new InstantCommand(m_intakeSubsystem::intakeStop));
         

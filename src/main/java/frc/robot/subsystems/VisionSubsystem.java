@@ -13,26 +13,40 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 public class VisionSubsystem extends SubsystemBase {
     final private NetworkTableEntry ty;
     final private NetworkTableEntry tx; 
-    //final private NetworkTableEntry tl;
     final private NetworkTableEntry tv;
-    final private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+    //final private NetworkTableEntry tl;
+    final private NetworkTableEntry txNote;
+    final private NetworkTableEntry tyNote; 
+    private final NetworkTableEntry taNote;
+    private final NetworkTableEntry tclassNote;
+    final private NetworkTableEntry tvNote;
+    
+    final private NetworkTable limelight2Table = NetworkTableInstance.getDefault().getTable("limelight-two");
+    final private NetworkTable limelight3Table = NetworkTableInstance.getDefault().getTable("limelight-three");
 
     //Field for april tag detection
     private final Field2d m_field = new Field2d();
     
 
     public VisionSubsystem(){
-        ty = limelightTable.getEntry("ty");
-        tx = limelightTable.getEntry("tx");
+        ty = limelight3Table.getEntry("ty");
+        tx = limelight3Table.getEntry("tx");
+        
         //TODO: what is tl and why is it not configured properly?
         //tl = limelightTable.getEntry("ty");
-        tv = limelightTable.getEntry("tv");
+        tv = limelight3Table.getEntry("tv");
+        
+        txNote = limelight2Table.getEntry("tx");
+        tyNote = limelight2Table.getEntry("ty");
+        taNote = limelight2Table.getEntry("ta");
+        tclassNote = limelight2Table.getEntry("tclass");
+        tvNote = limelight2Table.getEntry("tv");
 
-        setPipeline(VisionConstants.kDefaultPipeline);
+        //setPipeline(VisionConstants.kDefaultPipeline);
 
-        Shuffleboard.getTab("Vision").addInteger("Pipeline", () -> getPipeline());
-        Shuffleboard.getTab("Vision").addDouble("Distance", () -> getReflectiveTapeDistance());
-        Shuffleboard.getTab("Vision").add(m_field);
+        // Shuffleboard.getTab("Vision").addInteger("Pipeline", () -> getPipeline());
+        // Shuffleboard.getTab("Vision").addDouble("Distance", () -> getReflectiveTapeDistance());
+        // Shuffleboard.getTab("Vision").add(m_field);
     }
 
     //tv = valid targets
@@ -40,12 +54,13 @@ public class VisionSubsystem extends SubsystemBase {
     //ty vertical offset from crosshair to target
     //ta = target area 0% to 100%
     
-    public void setPipeline(int pipeline){
-        limelightTable.getEntry("pipeline").setNumber(pipeline);
+    public void setPipeline(int pipeline, int pipelineNote){
+        limelight3Table.getEntry("pipeline").setNumber(pipeline);
+        limelight2Table.getEntry("pipeline").setNumber(pipelineNote);
     }
 
     public int getPipeline(){
-        return ((Double)limelightTable.getEntry("pipeline").getNumber(-1)).intValue();
+        return ((Double)limelight3Table.getEntry("pipeline").getNumber(-1)).intValue();
     }
 
     /**

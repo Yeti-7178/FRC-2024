@@ -51,7 +51,7 @@ public class AutoAlignCircle extends Command {
     public void initialize(){
         //m_chassisSubsystem.setBrakeMode();
 
-        m_visionSubsystem.setPipeline(3);
+        //m_visionSubsystem.setPipeline(3);
 
         m_complete = false;
     }

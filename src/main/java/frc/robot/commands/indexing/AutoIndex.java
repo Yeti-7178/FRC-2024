@@ -23,15 +23,13 @@ public class AutoIndex extends Command {
     
     private final IndexerSubsystem m_indexerSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
-    private final ShooterSubsystem m_shooterSubsystem;
 
     private boolean m_complete = false;
 
-    public AutoIndex(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter) {
+    public AutoIndex(IndexerSubsystem indexer, IntakeSubsystem intake) {
         m_indexerSubsystem = indexer;
         m_intakeSubsystem = intake;
-        m_shooterSubsystem = shooter;
-        addRequirements(indexer, intake, shooter);
+        addRequirements(indexer, intake);
     }
 
     @Override

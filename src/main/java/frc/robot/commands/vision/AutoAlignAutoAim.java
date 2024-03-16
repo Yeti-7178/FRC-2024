@@ -54,7 +54,7 @@ public class AutoAlignAutoAim extends Command {
     @Override
     public void initialize(){
         //m_chassisSubsystem.setBrakeMode();
-        m_visionSubsystem.setPipeline(VisionConstants.kReflectiveTapePipeline);
+        //m_visionSubsystem.setPipeline(VisionConstants.kReflectiveTapePipeline);
         m_complete = false;
     }
 
