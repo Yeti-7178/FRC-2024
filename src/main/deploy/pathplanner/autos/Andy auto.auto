@@ -1,12 +1,6 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 0.79,
-      "y": 6.49
-    },
-    "rotation": 60.0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
@@ -14,37 +8,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Amp to 1"
+            "pathName": "Mid to 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "1 to Amp"
+            "pathName": "1 to Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Amp to 2"
+            "pathName": "Mid to 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "2 to Amp"
+            "pathName": "2 to Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Amp to 3"
+            "pathName": "Mid to 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3 to Amp"
+            "pathName": "3 to Mid"
           }
         }
       ]
