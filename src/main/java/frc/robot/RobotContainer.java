@@ -33,9 +33,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.VisionSubsystem;
+// import frc.robot.commands.indexing.AutoEjectThroughIntake;
 import frc.robot.commands.indexing.AutoIndex;
 import frc.robot.commands.indexing.AutoIndexAmp;
 import frc.robot.commands.indexing.AutoIndexAuton;
+// import frc.robot.commands.indexing.EjectThroughIntake;
 import frc.robot.commands.shooter.AutoAlignAndShoot;
 import frc.robot.commands.shooter.AutoAlignAndShootAuton;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -131,7 +133,7 @@ public class RobotContainer {
     Shuffleboard.getTab("Swerve").add("reset pose", new InstantCommand(this::resetPose)).withSize(2, 1);
     Shuffleboard.getTab("Swerve").add("deploy chop", new InstantCommand((m_ampSubsystem::ampToggle)));
     Shuffleboard.getTab("Sensor").add("Sensor", m_ampSubsystem.getAmpIndex());
-        
+   
     //sensor debugging
   //  Shuffleboard.getTab("Sensor").add("Top right sensor", m_climbSubsystem.getTopRightLimit());
 
@@ -190,11 +192,16 @@ public class RobotContainer {
       .whileFalse(new InstantCommand(() -> m_driverController.setRumble(RumbleType.kBothRumble, 0)));
 
     /* OPERATOR CONTROLLER */
+    //intake and indexing
     new JoystickButton(m_opperatorController, Button.kB.value)
         .onTrue(new AutoIndex(m_indexerSubsystem, m_intakeSubsystem));
-        new JoystickButton(m_opperatorController, Button.kStart.value)
-          .onTrue(new InstantCommand(m_intakeSubsystem::intakeStop));
-        
+    /*new JoystickButton(m_opperatorController, Button.kStart.value)
+      .onTrue(new InstantCommand(m_intakeSubsystem::intakeRunBackwards))
+      .onFalse(new InstantCommand(m_intakeSubsystem::intakeStop));*/
+    new JoystickButton(m_opperatorController, Button.kStart.value)
+      .onTrue(new RunCommand(() -> m_intakeSubsystem.intakeRunBackwards(), m_intakeSubsystem))
+      .onFalse(new InstantCommand(() -> m_intakeSubsystem.intakeStop(), m_intakeSubsystem));
+    //shooting and scoring
     new JoystickButton(m_opperatorController, Button.kA.value)
         .onTrue(new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
     new JoystickButton(m_opperatorController, Button.kY.value)
@@ -202,6 +209,7 @@ public class RobotContainer {
     new JoystickButton(m_opperatorController, Button.kX.value)
         .onTrue(new InstantCommand(() -> m_ampSubsystem.ampToggle()))
         .onFalse(new InstantCommand(() -> m_ampSubsystem.ampToggle()));
+    //climbing
     new JoystickButton(m_opperatorController, Button.kRightBumper.value)
         .whileTrue(new RunCommand(() -> m_climbSubsystem.climbUp()))
         .onFalse(new InstantCommand(() -> m_climbSubsystem.climbStop()));

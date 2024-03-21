@@ -29,8 +29,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
     public void setSlowSpeed()
     {
-        m_upperShooterMotorA.set(.1); //ramp up?
-        m_upperShooterMotorB.set(-.1); //ramp up?
+        m_upperShooterMotorA.set(.12); //ramp up?
+        m_upperShooterMotorB.set(-.12); //ramp up?
     }
     public void setSpeed(double d)
     {

@@ -60,7 +60,8 @@ public class VisionSubsystem extends SubsystemBase {
     }
 
     public int getPipeline(){
-        return ((Double)limelight3Table.getEntry("pipeline").getNumber(-1)).intValue();
+        return ((Double)limelight3Table.getEntry("pipeline").getNumber(-1)).intValue();  
+
     }
 
     /**
@@ -69,7 +70,7 @@ public class VisionSubsystem extends SubsystemBase {
     public double getX(){
         return tx.getDouble(0.0);
     }
-
+    
     /**
      * Returns the vertical offset from the crosshair to the target. Returns 0 if the target can't be found.
      */
@@ -88,10 +89,54 @@ public class VisionSubsystem extends SubsystemBase {
         return (int)tv.getDouble(0);
     }
 
+    public double getNoteTX()
+    {
+        return txNote.getDouble(0.0);
+    }
+    public double getNoteTY()
+    {
+        return tyNote.getDouble(0.0);
+    }
+    public double getNoteTA()
+    {
+        return taNote.getDouble(0.0);
+    }
+    public double getNoteTClass()
+    {
+        return tclassNote.getDouble(0.0);
+    }
+    public double getNoteTV()
+    {
+        return tvNote.getDouble(0.0);
+    }
     /**
      * Returns the distance between the robot and the reflective tape goal. Returns 0 if no targets can be found.
      */
     public double getReflectiveTapeDistance(){
+        //Check for no targets
+        if(getTV() == 0){
+            return 0;
+        }
+        
+        final double targetOffsetAngle_Vertical = getY();
+
+        // distance from the target to the floor
+        final double goalHeightInches;
+
+        if(targetOffsetAngle_Vertical > 0){
+            goalHeightInches = VisionConstants.kTopReflectiveTapeHeight;
+        }
+        else{
+            goalHeightInches = VisionConstants.kBottomReflectiveTapeHeight;
+        }
+
+        final double angleToGoalDegrees = VisionConstants.kLimelightMountAngle + targetOffsetAngle_Vertical;
+        final double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0);
+
+        //calculate distance
+        return (goalHeightInches - VisionConstants.kLimelightLensHeight) / Math.tan(angleToGoalRadians);
+    }
+     public double getNoteDistance(){
         //Check for no targets
         if(getTV() == 0){
             return 0;

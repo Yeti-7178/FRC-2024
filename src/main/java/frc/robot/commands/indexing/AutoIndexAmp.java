@@ -48,7 +48,7 @@ public class AutoIndexAmp extends Command {
         if(m_ampSubsystem.getAmpIndex()) 
         {
             m_indexerSubsystem.runConveyorForward();
-            m_shooterSubsystem.setSpeed(.1);
+            m_shooterSubsystem.setSpeed(.15);
             //m_ampSubsystem.ampToggle();
         } 
         else
