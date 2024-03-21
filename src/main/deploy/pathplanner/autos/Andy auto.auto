@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2437546130441748,
-      "y": 5.562647359246215
+      "x": 0.79,
+      "y": 6.49
     },
-    "rotation": 0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Andy path 1"
+            "pathName": "Amp to 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1 to Amp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp to 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2 to Amp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp to 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3 to Amp"
           }
         }
       ]
