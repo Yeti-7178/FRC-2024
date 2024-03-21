@@ -4,49 +4,65 @@
     {
       "anchor": {
         "x": 0.79,
-        "y": 6.49
+        "y": 4.59
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.79,
-        "y": 6.49
+        "x": 1.8025666218362575,
+        "y": 3.2619906490001247
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.8043107514786465,
-        "y": 7.440938625719617
+        "x": 5.42,
+        "y": 1.92
       },
       "prevControl": {
-        "x": 5.5112953657751405,
-        "y": 7.440938625719617
+        "x": 4.137012333516581,
+        "y": 1.852761465552073
       },
       "nextControl": {
-        "x": 7.805248935562631,
-        "y": 7.440938625719617
+        "x": 6.3087802859315705,
+        "y": 1.9665790010562203
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.99,
-        "y": 7.440938625719617
+        "x": 7.37,
+        "y": 2.44
       },
       "prevControl": {
-        "x": 7.570012236514344,
-        "y": 7.437732612257886
+        "x": 7.1,
+        "y": 2.44
+      },
+      "nextControl": {
+        "x": 7.61,
+        "y": 2.44
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.98,
+        "y": 2.44
+      },
+      "prevControl": {
+        "x": 7.793573134997817,
+        "y": 2.44
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note 4"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 2.0,
       "rotationDegrees": 0,
       "rotateFast": false
     }
@@ -65,9 +81,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Andy's Amp side paths",
+  "folder": "Andy's Other side paths",
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": -60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

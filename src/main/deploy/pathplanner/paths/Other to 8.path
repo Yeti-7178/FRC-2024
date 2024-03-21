@@ -4,49 +4,33 @@
     {
       "anchor": {
         "x": 0.79,
-        "y": 6.49
+        "y": 4.59
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.79,
-        "y": 6.49
+        "x": 3.020000000000004,
+        "y": 0.7275266991214058
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.8043107514786465,
-        "y": 7.440938625719617
+        "x": 7.977067382706194,
+        "y": 0.7784677638320808
       },
       "prevControl": {
-        "x": 5.5112953657751405,
-        "y": 7.440938625719617
-      },
-      "nextControl": {
-        "x": 7.805248935562631,
-        "y": 7.440938625719617
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 7.99,
-        "y": 7.440938625719617
-      },
-      "prevControl": {
-        "x": 7.570012236514344,
-        "y": 7.437732612257886
+        "x": 5.520344439703658,
+        "y": 0.8189076476675127
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note 4"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 0.95,
       "rotationDegrees": 0,
       "rotateFast": false
     }
@@ -65,9 +49,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Andy's Amp side paths",
+  "folder": "Andy's Other side paths",
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": -60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
