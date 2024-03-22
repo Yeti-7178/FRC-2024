@@ -137,7 +137,7 @@ public class DriveSubsystem extends SubsystemBase {
         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
             new PIDConstants(HeadingConstants.kTranslationP, HeadingConstants.kTranslationI, HeadingConstants.kTranslationD), // Translation PID constants
-            new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+            new PIDConstants(4.0, 0.0, 0.0), // Rotation PID constants
             DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
             // Using pythagoras's theorem to find distance from robot center to module
             Math.hypot(DriveConstants.kTrackWidth / 2, DriveConstants.kWheelBase / 2), // Drive base radius in meters. Distance from robot center to furthest module.

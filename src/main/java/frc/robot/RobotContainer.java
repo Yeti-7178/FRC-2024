@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.auton.TemplateAuton;
 import frc.robot.commands.drive.RobotGotoAngle;
@@ -27,6 +28,7 @@ import frc.robot.subsystems.AmpSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -62,7 +64,7 @@ public class RobotContainer {
   public final AmpSubsystem m_ampSubsystem = new AmpSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
   // uncomment this once LEDs are addded
-  // private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
+  private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
 
   // The driver's controller
   // final Joystick m_driverController = new Joystick(OIConstants.kDriverControllerPort);
@@ -83,6 +85,9 @@ public class RobotContainer {
     m_shooterSubsystem.setSlowSpeed();
     // Configure limelight default pipeline
     m_visionSubsystem.setDefaultCommand(new DefaultLimelightPipeline(m_visionSubsystem));
+
+    //LED debugging
+    m_LEDSubsystem.LEDGreen();
 
 
     // Configure default commands
@@ -124,6 +129,11 @@ public class RobotContainer {
     m_autonChooser.addOption("DoNothingOther", new PathPlannerAuto("doNOther"));
     m_autonChooser.addOption("MoveAuto", new PathPlannerAuto("MoveAuto"));
     m_autonChooser.addOption("Andy testing", new PathPlannerAuto("Andy auto"));
+    m_autonChooser.addOption("Andy mid - 2, 1, 3, 4", new PathPlannerAuto("mid2134"));
+    m_autonChooser.addOption("Andy amp - 1, 2, 4", new PathPlannerAuto("Amp - 1, 2, 4"));
+    m_autonChooser.addOption("Andy other side - 3, 8, 7", new PathPlannerAuto("Other - 3, 8, 7"));
+
+
 
     // Put chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2, 1)

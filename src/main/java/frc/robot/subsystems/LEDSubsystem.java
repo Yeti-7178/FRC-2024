@@ -10,6 +10,11 @@ public class LEDSubsystem {
     private AddressableLED m_LED = new AddressableLED(LEDConstants.kLEDPort);
     private AddressableLEDBuffer m_LEDBuffer = new AddressableLEDBuffer(LEDConstants.kLEDLength);
 
+    public LEDSubsystem() {
+        m_LED.setLength(LEDConstants.kLEDLength);
+        m_LED.start();
+    }
+
     /* functions for establishing the LED, setting it in other files, starting/stopping */
     public void SetLEDLength(int length) { 
         //will probably need to add an AddressableLED parameter if multiple LED strips are used,
