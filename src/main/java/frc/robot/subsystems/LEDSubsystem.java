@@ -49,22 +49,64 @@ public class LEDSubsystem {
         //update the LEDs with the new buffer
         m_LED.setData(m_LEDBuffer);
     }
+    public void LEDRed() {
+        //iterate through the buffer and set each LED to green
+        for (int i = 0; i < LEDConstants.kLEDLength; i++) {
+            m_LEDBuffer.setLED(i, Color.kRed);
+        }
+
+        //update the LEDs with the new buffer
+        m_LED.setData(m_LEDBuffer);
+    }
+    public void LEDYellow() {
+        //iterate through the buffer and set each LED to green
+        for (int i = 0; i < LEDConstants.kLEDLength; i++) {
+            m_LEDBuffer.setLED(i, Color.kLightYellow);
+        }
+
+        //update the LEDs with the new buffer
+        m_LED.setData(m_LEDBuffer);
+    }
 
     public void LEDYeti() {
         //I'd like to make a gradient from yeti blue (which I found to be about 0, 115, 255 RGB) to white
         double redValue = 0;
-        double redValueIncrement = (255 - redValue) / LEDConstants.kLEDLength;
+        // double redValueIncrement = (255 - redValue) / LEDConstants.kLEDLength;
         double greenValue = 115;
-        double greenValueIncrement = (255 - greenValue) / LEDConstants.kLEDLength;
+        // double greenValueIncrement = (255 - greenValue) / LEDConstants.kLEDLength;
 
         //update the LED Buffer
         for (int i = 0; i < LEDConstants.kLEDLength; i++) {
-            m_LEDBuffer.setLED(i, new Color(redValue, greenValue, 255)); //should I create a new color object every time or use something else?
-            redValue += redValueIncrement;
-            greenValue += greenValueIncrement;
+            if(i % 2 == 0){
+                m_LEDBuffer.setLED(i, new Color(redValue, greenValue, 255)); //should I create a new color object every time or use something else?
+
+            }
+            else
+            {
+                 m_LEDBuffer.setLED(i, new Color(200, 200, 200));
+            }
+            
         }
 
         //update the LEDs
+        m_LED.setData(m_LEDBuffer);
+    }
+
+    public void LEDProgressBar(double percentage, Color color) {
+        //get the number of LEDS that need to be on
+        double numberLit = Math.floor(LEDConstants.kLEDLength * percentage);
+
+        //iterate through the buffer. If the current LED index is below the number of LEDS that need to be on, turn it on to the color.
+        //otherwise, set it black.
+        for (var i = 0; i < LEDConstants.kLEDLength; i++) {
+            if (i <= numberLit) {
+                m_LEDBuffer.setLED(i, color);
+            } else {
+                m_LEDBuffer.setLED(i, Color.kBlack);
+            }
+        }
+
+        //update the LED strip
         m_LED.setData(m_LEDBuffer);
     }
 }

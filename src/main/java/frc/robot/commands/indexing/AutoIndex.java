@@ -5,7 +5,11 @@ package frc.robot.commands.indexing;
 //subsystems
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+
+import javax.swing.text.AbstractDocument.LeafElement;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //bc it's a command
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,12 +27,14 @@ public class AutoIndex extends Command {
     
     private final IndexerSubsystem m_indexerSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
+    final LEDSubsystem m_ledSubsystem;
 
     private boolean m_complete = false;
 
-    public AutoIndex(IndexerSubsystem indexer, IntakeSubsystem intake) {
+    public AutoIndex(IndexerSubsystem indexer, IntakeSubsystem intake, LEDSubsystem led) {
         m_indexerSubsystem = indexer;
         m_intakeSubsystem = intake;
+        m_ledSubsystem = led;
         addRequirements(indexer, intake);
     }
 
@@ -38,6 +44,7 @@ public class AutoIndex extends Command {
             // if both sensors detect then we are full
             m_intakeSubsystem.intakeStop();
             m_indexerSubsystem.stopIndexConveyor();
+            
             
             SmartDashboard.putString("Index State","FULL");
         }
@@ -55,14 +62,15 @@ public class AutoIndex extends Command {
         {
             m_intakeSubsystem.intakeRunForward();
             m_indexerSubsystem.runConveyorForward();
-
+            m_ledSubsystem.LEDRed();
         } 
         else
         {
             m_intakeSubsystem.intakeRunBackwards();
             m_indexerSubsystem.stopIndexConveyor();
             new WaitCommand(.5);
-            m_intakeSubsystem.intakeStop();    
+            m_intakeSubsystem.intakeStop();
+            m_ledSubsystem.LEDGreen();     
             m_complete = true;
         }   
     }

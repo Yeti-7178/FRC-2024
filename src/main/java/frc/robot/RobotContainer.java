@@ -22,6 +22,7 @@ import frc.robot.commands.auton.TemplateAuton;
 import frc.robot.commands.drive.RobotGotoAngle;
 import frc.robot.commands.vision.AutoAlignAutoAim;
 import frc.robot.commands.vision.AutoAlignCircle;
+import frc.robot.commands.vision.AutoPickUpNote;
 import frc.robot.commands.vision.DefaultLimelightPipeline;
 import frc.robot.commands.vision.UpdateOdometry;
 import frc.robot.subsystems.AmpSubsystem;
@@ -87,7 +88,7 @@ public class RobotContainer {
     m_visionSubsystem.setDefaultCommand(new DefaultLimelightPipeline(m_visionSubsystem));
 
     //LED debugging
-    m_LEDSubsystem.LEDGreen();
+    m_LEDSubsystem.LEDYeti();
 
 
     // Configure default commands
@@ -114,14 +115,25 @@ public class RobotContainer {
     NamedCommands.registerCommand("Auto Align", new AutoAlignAutoAim(m_visionSubsystem, m_robotDrive));
     
     NamedCommands.registerCommand("AutoIndex", new AutoIndexAuton(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
-    NamedCommands.registerCommand("AutoShoot", new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
+    NamedCommands.registerCommand("AutoShoot", new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
 
 
     //Adding options to the sendable chooser
     
+    //amp side
     m_autonChooser.setDefaultOption("Amp Side", new PathPlannerAuto("Amp Side"));
+    m_autonChooser.addOption("Andy amp - 1, 2, 4", new PathPlannerAuto("Amp - 1, 2, 4"));
+    //middle side
     m_autonChooser.addOption("Midle", new PathPlannerAuto("Mid Side"));
+    m_autonChooser.addOption("Andy mid - 2, 1, 3, 4", new PathPlannerAuto("mid2134"));
+    m_autonChooser.addOption("Andy mid - 2, 1", new PathPlannerAuto("Mid - 2, 1"));
+    m_autonChooser.addOption("Andy mid - 2, 3", new PathPlannerAuto("Mid - 2, 3"));
+    //other side
     m_autonChooser.addOption("Other side", new PathPlannerAuto("Other Start"));
+    m_autonChooser.addOption("Andy other side - 3, 8, 7", new PathPlannerAuto("Other - 3, 8, 7"));
+    m_autonChooser.addOption("Andy other side - 8, 7", new PathPlannerAuto("Other - 8, 7"));
+
+    //misc/testing
     m_autonChooser.addOption("test", new PathPlannerAuto("COMMANDTESTER"));
     m_autonChooser.addOption("New Auton", new PathPlannerAuto("New Auto"));
     m_autonChooser.addOption("DoNothingAmp", new PathPlannerAuto("doNAmp"));
@@ -129,9 +141,7 @@ public class RobotContainer {
     m_autonChooser.addOption("DoNothingOther", new PathPlannerAuto("doNOther"));
     m_autonChooser.addOption("MoveAuto", new PathPlannerAuto("MoveAuto"));
     m_autonChooser.addOption("Andy testing", new PathPlannerAuto("Andy auto"));
-    m_autonChooser.addOption("Andy mid - 2, 1, 3, 4", new PathPlannerAuto("mid2134"));
-    m_autonChooser.addOption("Andy amp - 1, 2, 4", new PathPlannerAuto("Amp - 1, 2, 4"));
-    m_autonChooser.addOption("Andy other side - 3, 8, 7", new PathPlannerAuto("Other - 3, 8, 7"));
+    m_autonChooser.addOption("Rotation testing", new PathPlannerAuto("Rotation testing"));
 
 
 
@@ -180,15 +190,11 @@ public class RobotContainer {
     //     );
     
     //A button: makes robot face 0 degrees
-    new JoystickButton(m_driverController, Button.kA.value)
-        .onTrue(
-            new RobotGotoAngle(
-              m_robotDrive,
-              0,
-              () -> m_driverController.getLeftY(),
-              () -> m_driverController.getLeftX()
-            )
-        );
+    // new JoystickButton(m_driverController, Button.kA.value)
+    //     .onTrue(
+    //         new AutoPickUpNote(m_intakeSubsystem, m_visionSubsystem, m_robotDrive, m_indexerSubsystem, m_LEDSubsystem)
+    //     )
+        // .onFalse(new InstantCommand(() -> m_robotDrive.drive(0, 0, 0, true, true), m_robotDrive));
 
     
     //B button: sets gyro to 90 degrees
@@ -204,7 +210,7 @@ public class RobotContainer {
     /* OPERATOR CONTROLLER */
     //intake and indexing
     new JoystickButton(m_opperatorController, Button.kB.value)
-        .onTrue(new AutoIndex(m_indexerSubsystem, m_intakeSubsystem));
+        .onTrue(new AutoIndex(m_indexerSubsystem, m_intakeSubsystem, m_LEDSubsystem));
     /*new JoystickButton(m_opperatorController, Button.kStart.value)
       .onTrue(new InstantCommand(m_intakeSubsystem::intakeRunBackwards))
       .onFalse(new InstantCommand(m_intakeSubsystem::intakeStop));*/
@@ -213,12 +219,16 @@ public class RobotContainer {
       .onFalse(new InstantCommand(() -> m_intakeSubsystem.intakeStop(), m_intakeSubsystem));
     //shooting and scoring
     new JoystickButton(m_opperatorController, Button.kA.value)
-        .onTrue(new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
+        .onTrue(new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
     new JoystickButton(m_opperatorController, Button.kY.value)
-        .onTrue(new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem));
+        .onTrue(new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
     new JoystickButton(m_opperatorController, Button.kX.value)
-        .onTrue(new InstantCommand(() -> m_ampSubsystem.ampToggle()))
-        .onFalse(new InstantCommand(() -> m_ampSubsystem.ampToggle()));
+        .onTrue(new InstantCommand(() -> m_ampSubsystem.ampToggle()) )
+        .onFalse(
+          new ParallelCommandGroup(
+          new InstantCommand(() -> m_ampSubsystem.ampToggle()),
+           new InstantCommand(() -> m_LEDSubsystem.LEDYeti()))
+          );
     //climbing
     new JoystickButton(m_opperatorController, Button.kRightBumper.value)
         .whileTrue(new RunCommand(() -> m_climbSubsystem.climbUp()))

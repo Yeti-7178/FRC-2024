@@ -12,6 +12,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final  CANSparkMax m_upperShooterMotorA = new CANSparkMax(ShooterConstants.kUpperShooterMotorPortA, MotorType.kBrushless);
     private final  CANSparkMax m_upperShooterMotorB = new CANSparkMax(ShooterConstants.kUpperShooterMotorPortB, MotorType.kBrushless);
+    private double averageVel;
 
     public ShooterSubsystem(){
         m_upperShooterMotorA.restoreFactoryDefaults();
@@ -42,6 +43,11 @@ public class ShooterSubsystem extends SubsystemBase {
         m_upperShooterMotorA.set(0); //fall off?
         m_upperShooterMotorB.set(0); //fall off?
     }
+    public double getAverageVel()
+    {
+        averageVel = (m_upperShooterMotorA.get() + m_upperShooterMotorB.get()) / 2;
 
+        return averageVel;
+    }
   
 }

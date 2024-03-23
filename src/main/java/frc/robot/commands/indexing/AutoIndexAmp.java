@@ -5,6 +5,7 @@ package frc.robot.commands.indexing;
 //subsystems
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.AmpSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,13 +18,15 @@ public class AutoIndexAmp extends Command {
     private final IndexerSubsystem m_indexerSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
     private final AmpSubsystem m_ampSubsystem;
+    final LEDSubsystem m_ledSubsystem;
 
     private boolean m_complete = false;
 
-    public AutoIndexAmp(IndexerSubsystem indexer, ShooterSubsystem shooter, AmpSubsystem amp) {
+    public AutoIndexAmp(IndexerSubsystem indexer, ShooterSubsystem shooter, AmpSubsystem amp, LEDSubsystem led) {
         m_indexerSubsystem = indexer;
         m_shooterSubsystem = shooter;
         m_ampSubsystem = amp;
+        m_ledSubsystem = led;
         addRequirements(indexer, shooter, amp);
     }
 
@@ -55,6 +58,7 @@ public class AutoIndexAmp extends Command {
         {
             m_shooterSubsystem.shooterOff();
             m_indexerSubsystem.stopIndexConveyor();
+            m_ledSubsystem.LEDYellow();
             m_complete = true;
         }   
     }
