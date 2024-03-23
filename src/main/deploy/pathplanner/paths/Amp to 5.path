@@ -3,35 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.882,
-        "y": 7.01
+        "x": 0.7888780309580332,
+        "y": 6.490601355586948
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7392153010907017,
-        "y": 6.985989932570998
+        "x": 3.51857018984974,
+        "y": 7.380278799966467
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.79,
-        "y": 6.49
+        "x": 8.007397295582768,
+        "y": 5.853673185178884
       },
       "prevControl": {
-        "x": 1.2033868402712184,
-        "y": 6.965769990653282
+        "x": 7.947397295582769,
+        "y": 5.853673185178884
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note 5"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 0.75,
-      "rotationDegrees": 60.0,
+      "rotationDegrees": -14.22586301997154,
       "rotateFast": false
     }
   ],
@@ -45,13 +45,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 60.0,
+    "rotation": -14.0362434679267,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Andy's Amp side paths",
   "previewStartingState": {
-    "rotation": 11.6,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
