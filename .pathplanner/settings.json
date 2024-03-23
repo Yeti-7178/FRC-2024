@@ -10,7 +10,11 @@
     "Andy's Other side paths",
     "OTHER START"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Amp autons",
+    "Middle autons",
+    "Other autons"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

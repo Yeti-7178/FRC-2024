@@ -3,15 +3,21 @@
   "startingPose": {
     "position": {
       "x": 0.79,
-      "y": 6.49
+      "y": 4.59
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
@@ -22,13 +28,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Amp to 1"
+                        "pathName": "Other to 8"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "1 to Amp"
+                        "pathName": "8 to Other"
                       }
                     }
                   ]
@@ -60,51 +66,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Amp to 4"
+                        "pathName": "Other to 7"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "4 to Amp"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoIndex"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Amp to 5"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5 to Amp"
+                        "pathName": "7 to Other"
                       }
                     }
                   ]
@@ -128,6 +96,6 @@
       ]
     }
   },
-  "folder": "Amp autons",
+  "folder": "Other autons",
   "choreoAuto": false
 }

@@ -101,9 +101,9 @@ public class VisionSubsystem extends SubsystemBase {
     {
         return taNote.getDouble(0.0);
     }
-    public double getNoteTClass()
+    public String getNoteTClass()
     {
-        return tclassNote.getDouble(0.0);
+        return tclassNote.getString("Nothing");
     }
     public double getNoteTV()
     {
@@ -118,7 +118,7 @@ public class VisionSubsystem extends SubsystemBase {
             return 0;
         }
         
-        final double targetOffsetAngle_Vertical = getY();
+        final double targetOffsetAngle_Vertical = getNoteTX();
 
         // distance from the target to the floor
         final double goalHeightInches;
@@ -141,24 +141,14 @@ public class VisionSubsystem extends SubsystemBase {
         if(getTV() == 0){
             return 0;
         }
-        
-        final double targetOffsetAngle_Vertical = getY();
-
-        // distance from the target to the floor
-        final double goalHeightInches;
-
-        if(targetOffsetAngle_Vertical > 0){
-            goalHeightInches = VisionConstants.kTopReflectiveTapeHeight;
+        if(getNoteTClass() == "Note")
+        {
+            //calculate distance
+            return getNoteTX();
         }
         else{
-            goalHeightInches = VisionConstants.kBottomReflectiveTapeHeight;
+            return 0;
         }
-
-        final double angleToGoalDegrees = VisionConstants.kLimelightMountAngle + targetOffsetAngle_Vertical;
-        final double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0);
-
-        //calculate distance
-        return (goalHeightInches - VisionConstants.kLimelightLensHeight) / Math.tan(angleToGoalRadians);
     }
 
     /**

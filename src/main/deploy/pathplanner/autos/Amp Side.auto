@@ -18,19 +18,19 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoIndex"
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "AS 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoIndex"
                 }
               }
             ]
@@ -49,7 +49,13 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -70,6 +76,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Amp autons",
   "choreoAuto": false
 }
