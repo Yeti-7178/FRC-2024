@@ -43,6 +43,7 @@ import frc.robot.commands.indexing.AutoIndexAuton;
 // import frc.robot.commands.indexing.EjectThroughIntake;
 import frc.robot.commands.shooter.AutoAlignAndShoot;
 import frc.robot.commands.shooter.AutoAlignAndShootAuton;
+import frc.robot.commands.shooter.AutoFirstShot;
 import frc.robot.subsystems.IndexerSubsystem;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
@@ -116,6 +117,7 @@ public class RobotContainer {
     
     NamedCommands.registerCommand("AutoIndex", new AutoIndexAuton(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
     NamedCommands.registerCommand("AutoShoot", new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
+    NamedCommands.registerCommand("First note AutoShoot", new AutoFirstShot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
 
 
     //Adding options to the sendable chooser
@@ -128,6 +130,7 @@ public class RobotContainer {
     m_autonChooser.addOption("Andy mid - 2, 1, 3, 4", new PathPlannerAuto("mid2134"));
     m_autonChooser.addOption("Andy mid - 2, 1", new PathPlannerAuto("Mid - 2, 1"));
     m_autonChooser.addOption("Andy mid - 2, 3", new PathPlannerAuto("Mid - 2, 3"));
+    m_autonChooser.addOption("Andy mid - 2 only", new PathPlannerAuto("Mid - 2"));
     //other side
     m_autonChooser.addOption("Other side", new PathPlannerAuto("Other Start"));
     m_autonChooser.addOption("Andy other side - 3, 8, 7", new PathPlannerAuto("Other - 3, 8, 7"));
@@ -142,6 +145,7 @@ public class RobotContainer {
     m_autonChooser.addOption("MoveAuto", new PathPlannerAuto("MoveAuto"));
     m_autonChooser.addOption("Andy testing", new PathPlannerAuto("Andy auto"));
     m_autonChooser.addOption("Rotation testing", new PathPlannerAuto("Rotation testing"));
+    m_autonChooser.addOption("First note testing", new PathPlannerAuto("First shot test"));
 
 
 
