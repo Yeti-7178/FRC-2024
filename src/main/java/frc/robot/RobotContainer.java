@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -118,40 +119,46 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutoIndex", new AutoIndexAuton(m_indexerSubsystem, m_intakeSubsystem, m_shooterSubsystem));
     NamedCommands.registerCommand("AutoShoot", new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
     NamedCommands.registerCommand("First note AutoShoot", new AutoFirstShot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
-
-
-    //Adding options to the sendable chooser
+    NamedCommands.registerCommand("Index Amp", new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
+    NamedCommands.registerCommand("Amp Toggle", new InstantCommand(m_ampSubsystem::ampToggle));
     
+
+   
+    //Adding options to the sendable chooser
+      m_autonChooser = AutoBuilder.buildAutoChooser();
+
     //amp side
-    m_autonChooser.setDefaultOption("Amp Side", new PathPlannerAuto("Amp Side"));
-    m_autonChooser.addOption("Andy amp - 1, 2, 4", new PathPlannerAuto("Amp - 1, 2, 4"));
+    // m_autonChooser.setDefaultOption("Amp Side", new PathPlannerAuto("Amp Side"));
+    // m_autonChooser.addOption("Andy amp - 1, 2, 4", new PathPlannerAuto("Amp - 1, 2, 4"));
     //middle side
-    m_autonChooser.addOption("Midle", new PathPlannerAuto("Mid Side"));
-    m_autonChooser.addOption("Andy mid - 2, 1, 3, 4", new PathPlannerAuto("mid2134"));
-    m_autonChooser.addOption("Andy mid - 2, 1", new PathPlannerAuto("Mid - 2, 1"));
-    m_autonChooser.addOption("Andy mid - 2, 3", new PathPlannerAuto("Mid - 2, 3"));
-    m_autonChooser.addOption("Andy mid - 2 only", new PathPlannerAuto("Mid - 2"));
+    // m_autonChooser.addOption("Midle", new PathPlannerAuto("Mid Side"));
+    // m_autonChooser.addOption("Andy mid - 2, 1, 3, 4", new PathPlannerAuto("mid2134"));
+    // m_autonChooser.addOption("Andy mid - 2, 1", new PathPlannerAuto("Mid - 2, 1"));
+    // m_autonChooser.addOption("Andy mid - 2, 3", new PathPlannerAuto("Mid - 2, 3"));
+    // m_autonChooser.addOption("Andy mid - 2 only", new PathPlannerAuto("Mid - 2"));
     //other side
-    m_autonChooser.addOption("Other side", new PathPlannerAuto("Other Start"));
-    m_autonChooser.addOption("Andy other side - 3, 8, 7", new PathPlannerAuto("Other - 3, 8, 7"));
-    m_autonChooser.addOption("Andy other side - 8, 7", new PathPlannerAuto("Other - 8, 7"));
+    // m_autonChooser.addOption("Other side", new PathPlannerAuto("Other Start"));
+    // m_autonChooser.addOption("Andy other side - 3, 8, 7", new PathPlannerAuto("Other - 3, 8, 7"));
+    // m_autonChooser.addOption("Andy other side - 8, 7", new PathPlannerAuto("Other - 8, 7"));
 
     //misc/testing
-    m_autonChooser.addOption("test", new PathPlannerAuto("COMMANDTESTER"));
-    m_autonChooser.addOption("New Auton", new PathPlannerAuto("New Auto"));
-    m_autonChooser.addOption("DoNothingAmp", new PathPlannerAuto("doNAmp"));
-    m_autonChooser.addOption("DoNothingMid", new PathPlannerAuto("doNMid"));
-    m_autonChooser.addOption("DoNothingOther", new PathPlannerAuto("doNOther"));
-    m_autonChooser.addOption("MoveAuto", new PathPlannerAuto("MoveAuto"));
-    m_autonChooser.addOption("Andy testing", new PathPlannerAuto("Andy auto"));
-    m_autonChooser.addOption("Rotation testing", new PathPlannerAuto("Rotation testing"));
-    m_autonChooser.addOption("First note testing", new PathPlannerAuto("First shot test"));
+    // m_autonChooser.addOption("test", new PathPlannerAuto("COMMANDTESTER"));
+    // m_autonChooser.addOption("New Auton", new PathPlannerAuto("New Auto"));
+    // m_autonChooser.addOption("DoNothingAmp", new PathPlannerAuto("doNAmp"));
+    // m_autonChooser.addOption("DoNothingMid", new PathPlannerAuto("doNMid"));
+    // m_autonChooser.addOption("DoNothingOther", new PathPlannerAuto("doNOther"));
+    // m_autonChooser.addOption("MoveAuto", new PathPlannerAuto("MoveAuto"));
+    // m_autonChooser.addOption("Andy testing", new PathPlannerAuto("Andy auto"));
+    // m_autonChooser.addOption("Rotation testing", new PathPlannerAuto("Rotation testing"));
+    // m_autonChooser.addOption("First note testing", new PathPlannerAuto("First shot test"));
 
 
 
     // Put chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2, 1)
       .withProperties(Map.of("Title", "Auton Command"));
+
+      
 
     // DEBUG: shuffleboard widget for resetting pose. For now I'm using a default pose of 0, 0 and a rotation of 0
     Shuffleboard.getTab("Swerve").add("reset pose", new InstantCommand(this::resetPose)).withSize(2, 1);
