@@ -38,6 +38,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_upperShooterMotorA.set(d); //ramp up?
         m_upperShooterMotorB.set(-d); //ramp up?
     }
+    public void shooterReverse() {
+        m_upperShooterMotorA.set(-.12);
+        m_upperShooterMotorB.set(.12);
+    }
 
     public void shooterOff(){
         m_upperShooterMotorA.set(0); //fall off?

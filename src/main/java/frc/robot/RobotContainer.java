@@ -35,6 +35,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.VisionSubsystem;
 // import frc.robot.commands.indexing.AutoEjectThroughIntake;
@@ -232,7 +233,12 @@ public class RobotContainer {
     new JoystickButton(m_opperatorController, Button.kA.value)
         .onTrue(new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
     new JoystickButton(m_opperatorController, Button.kY.value)
-        .onTrue(new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
+        .onTrue(
+          new ConditionalCommand(
+            new UndoAmpIndex(m_intakeSubsystem, m_indexerSubsystem, m_shooterSubsystem), 
+            new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem), 
+            () -> m_ampSubsystem.getAmpIndex()
+        ));
     new JoystickButton(m_opperatorController, Button.kX.value)
         .onTrue(new InstantCommand(() -> m_ampSubsystem.ampToggle()) )
         .onFalse(

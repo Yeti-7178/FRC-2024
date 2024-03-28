@@ -1,14 +1,86 @@
 package frc.robot.commands.indexing;
 
-//commands
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //subsystems
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.AmpSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class UndoAmpIndex extends SequentialCommandGroup {
-    
+//bc it's a command
+import edu.wpi.first.wpilibj2.command.Command;
+
+
+public class UndoAmpIndex extends Command {
+    //defining member subsystems
+    private final IntakeSubsystem m_intake;
+    private final IndexerSubsystem m_indexer;
+    private final ShooterSubsystem m_shooter;
+
+    //establishing state management
+    private enum reversingStates {
+        DOWN,
+        UP
+    }
+    reversingStates currentState = reversingStates.DOWN;
+    private boolean indexingSensorFirstPass = false;
+
+
+    //constructor and command scheduler stuff
+    public UndoAmpIndex(IntakeSubsystem intake, IndexerSubsystem index, ShooterSubsystem shooter) {
+        m_intake = intake;
+        m_indexer = indexer;
+        m_shooter = shooter;
+
+        addRequirements(m_intake, m_indexer, m_shooter);
+    }
+
+    @Override
+    public void initialize() {
+        //run everything backwards
+        m_intake.intakeRunBackwards();
+        m_indexer.runConveyorReverse();
+        m_shooter.shooterReverse();
+        //initialize states
+        currentState = reversingStates.DOWN;
+        indexingSensorFirstPass = false;
+    }
+
+    @Override
+    public void execute() {
+        //GOING DOWN
+        if (currentState = reversingStates.DOWN) {
+            //we want to switch to going up once we know that we've passed the indexing sensor
+            //and the indexing sensor is off. That will mean we're below the note.
+            if (m_indexer.getIndexerSensor()) {
+                //note once we have passed the indexer sensor
+                indexingSensorFirstPass = true;
+            }
+            if (indexingSensorFirstPass && !m_indexer.getIndexerSensor()) {
+                //if we have passed the indexing sensor and the indexing sensor is off, that means we've
+                //gone far enough, and we now need to go back up to the primary indexed state.
+                currentState = reversingStates.UP;
+                m_intakeSubsystem.intakeRunForward();
+                m_indexerSubsystem.runConveyorForward();
+                m_shooter.shooterOff();
+            }
+        }
+
+        //GOING UP
+        if (currentState = reversingStates.UP) {
+            //just keep going up until we hit the indexing sensor, then the note is properly indexed
+            if (m_indexer.getIndexerSensor) {
+                //once we've hit the sensor, stop the motors, and we're done.
+                m_intakeSubsystem.intakeStop();
+                m_indexerSubsystem.stopIndexConveyor();
+
+                m_complete = true;
+            }
+        }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_intakeSubsystem.intakeStop();
+        m_indexerSubsystem.stopIndexConveyor();
+        m_shooter.shooterOff();
+    }
 }
