@@ -27,7 +27,7 @@ public class AutoIndexAmp extends Command {
         m_shooterSubsystem = shooter;
         m_ampSubsystem = amp;
         m_ledSubsystem = led;
-        addRequirements(indexer, shooter, amp);
+        addRequirements(indexer, shooter, amp, led);
     }
 
     @Override

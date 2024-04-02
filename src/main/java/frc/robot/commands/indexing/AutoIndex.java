@@ -35,7 +35,7 @@ public class AutoIndex extends Command {
         m_indexerSubsystem = indexer;
         m_intakeSubsystem = intake;
         m_ledSubsystem = led;
-        addRequirements(indexer, intake);
+        addRequirements(indexer, intake, led);
     }
 
     @Override

@@ -23,6 +23,7 @@ import frc.robot.commands.auton.TemplateAuton;
 import frc.robot.commands.drive.RobotGotoAngle;
 import frc.robot.commands.vision.AutoAlignAutoAim;
 import frc.robot.commands.vision.AutoAlignCircle;
+import frc.robot.commands.vision.AutoDriveToNote;
 import frc.robot.commands.vision.AutoPickUpNote;
 import frc.robot.commands.vision.DefaultLimelightPipeline;
 import frc.robot.commands.vision.UpdateOdometry;
@@ -42,6 +43,7 @@ import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.commands.indexing.AutoIndex;
 import frc.robot.commands.indexing.AutoIndexAmp;
 import frc.robot.commands.indexing.AutoIndexAuton;
+import frc.robot.commands.indexing.UndoAmpIndex;
 // import frc.robot.commands.indexing.EjectThroughIntake;
 import frc.robot.commands.shooter.AutoAlignAndShoot;
 import frc.robot.commands.shooter.AutoAlignAndShootAuton;
@@ -126,32 +128,32 @@ public class RobotContainer {
 
    
     //Adding options to the sendable chooser
-      m_autonChooser = AutoBuilder.buildAutoChooser();
+    //  m_autonChooser = AutoBuilder.buildAutoChooser();
 
     //amp side
-    // m_autonChooser.setDefaultOption("Amp Side", new PathPlannerAuto("Amp Side"));
-    // m_autonChooser.addOption("Andy amp - 1, 2, 4", new PathPlannerAuto("Amp - 1, 2, 4"));
+    m_autonChooser.setDefaultOption("Amp Side", new PathPlannerAuto("Amp Side"));
+    m_autonChooser.addOption("Andy amp - 1, 2, 4", new PathPlannerAuto("Amp - 1, 2, 4"));
     //middle side
-    // m_autonChooser.addOption("Midle", new PathPlannerAuto("Mid Side"));
-    // m_autonChooser.addOption("Andy mid - 2, 1, 3, 4", new PathPlannerAuto("mid2134"));
-    // m_autonChooser.addOption("Andy mid - 2, 1", new PathPlannerAuto("Mid - 2, 1"));
-    // m_autonChooser.addOption("Andy mid - 2, 3", new PathPlannerAuto("Mid - 2, 3"));
-    // m_autonChooser.addOption("Andy mid - 2 only", new PathPlannerAuto("Mid - 2"));
+    m_autonChooser.addOption("Midle", new PathPlannerAuto("Mid Side"));
+    m_autonChooser.addOption("Andy mid - 2, 1, 3, 4", new PathPlannerAuto("mid2134"));
+    m_autonChooser.addOption("Andy mid - 2, 1", new PathPlannerAuto("Mid - 2, 1"));
+    m_autonChooser.addOption("Andy mid - 2, 3", new PathPlannerAuto("Mid - 2, 3"));
+    m_autonChooser.addOption("Andy mid - 2 only", new PathPlannerAuto("Mid - 2"));
     //other side
-    // m_autonChooser.addOption("Other side", new PathPlannerAuto("Other Start"));
-    // m_autonChooser.addOption("Andy other side - 3, 8, 7", new PathPlannerAuto("Other - 3, 8, 7"));
-    // m_autonChooser.addOption("Andy other side - 8, 7", new PathPlannerAuto("Other - 8, 7"));
+    m_autonChooser.addOption("Other side", new PathPlannerAuto("Other Start"));
+    m_autonChooser.addOption("Andy other side - 3, 8, 7", new PathPlannerAuto("Other - 3, 8, 7"));
+    m_autonChooser.addOption("Andy other side - 8, 7", new PathPlannerAuto("Other - 8, 7"));
 
     //misc/testing
-    // m_autonChooser.addOption("test", new PathPlannerAuto("COMMANDTESTER"));
-    // m_autonChooser.addOption("New Auton", new PathPlannerAuto("New Auto"));
-    // m_autonChooser.addOption("DoNothingAmp", new PathPlannerAuto("doNAmp"));
-    // m_autonChooser.addOption("DoNothingMid", new PathPlannerAuto("doNMid"));
-    // m_autonChooser.addOption("DoNothingOther", new PathPlannerAuto("doNOther"));
-    // m_autonChooser.addOption("MoveAuto", new PathPlannerAuto("MoveAuto"));
-    // m_autonChooser.addOption("Andy testing", new PathPlannerAuto("Andy auto"));
-    // m_autonChooser.addOption("Rotation testing", new PathPlannerAuto("Rotation testing"));
-    // m_autonChooser.addOption("First note testing", new PathPlannerAuto("First shot test"));
+    m_autonChooser.addOption("test", new PathPlannerAuto("COMMANDTESTER"));
+    m_autonChooser.addOption("New Auton", new PathPlannerAuto("New Auto"));
+    m_autonChooser.addOption("DoNothingAmp", new PathPlannerAuto("doNAmp"));
+    m_autonChooser.addOption("DoNothingMid", new PathPlannerAuto("doNMid"));
+    m_autonChooser.addOption("DoNothingOther", new PathPlannerAuto("doNOther"));
+    m_autonChooser.addOption("MoveAuto", new PathPlannerAuto("MoveAuto"));
+    m_autonChooser.addOption("Andy testing", new PathPlannerAuto("Andy auto"));
+    m_autonChooser.addOption("Rotation testing", new PathPlannerAuto("Rotation testing"));
+    m_autonChooser.addOption("First note testing", new PathPlannerAuto("First shot test"));
 
 
 
@@ -201,12 +203,12 @@ public class RobotContainer {
     //         new AutoAlignCircle(m_visionSubsystem, m_robotDrive)
     //     );
     
-    //A button: makes robot face 0 degrees
-    // new JoystickButton(m_driverController, Button.kA.value)
-    //     .onTrue(
-    //         new AutoPickUpNote(m_intakeSubsystem, m_visionSubsystem, m_robotDrive, m_indexerSubsystem, m_LEDSubsystem)
-    //     )
-        // .onFalse(new InstantCommand(() -> m_robotDrive.drive(0, 0, 0, true, true), m_robotDrive));
+    //A button: makes robot "pick up note"
+    new JoystickButton(m_driverController, Button.kA.value)
+        .onTrue(
+            new AutoPickUpNote(m_intakeSubsystem, m_visionSubsystem, m_robotDrive, m_indexerSubsystem, m_LEDSubsystem)
+        )
+        .onFalse(new InstantCommand(() -> m_robotDrive.drive(0, 0, 0, true, true), m_robotDrive));
 
     
     //B button: sets gyro to 90 degrees
@@ -235,8 +237,8 @@ public class RobotContainer {
     new JoystickButton(m_opperatorController, Button.kY.value)
         .onTrue(
           new ConditionalCommand(
+            new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem),
             new UndoAmpIndex(m_intakeSubsystem, m_indexerSubsystem, m_shooterSubsystem), 
-            new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem), 
             () -> m_ampSubsystem.getAmpIndex()
         ));
     new JoystickButton(m_opperatorController, Button.kX.value)

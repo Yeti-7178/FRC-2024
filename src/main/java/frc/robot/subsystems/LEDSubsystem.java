@@ -5,8 +5,9 @@ import frc.robot.Constants.LEDConstants;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LEDSubsystem {
+public class LEDSubsystem extends SubsystemBase {
     private AddressableLED m_LED = new AddressableLED(LEDConstants.kLEDPort);
     private AddressableLEDBuffer m_LEDBuffer = new AddressableLEDBuffer(LEDConstants.kLEDLength);
 

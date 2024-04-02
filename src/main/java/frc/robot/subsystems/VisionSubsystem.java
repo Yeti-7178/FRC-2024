@@ -141,7 +141,7 @@ public class VisionSubsystem extends SubsystemBase {
         if(getTV() == 0){
             return 0;
         }
-        if(getNoteTClass() == "Note")
+        if(getNoteTClass() == "note")
         {
             //calculate distance
             return getNoteTX();

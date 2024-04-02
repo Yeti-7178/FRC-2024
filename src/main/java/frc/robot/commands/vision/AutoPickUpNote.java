@@ -26,9 +26,11 @@ public class AutoPickUpNote extends SequentialCommandGroup {
 
         addCommands(
             new ParallelDeadlineGroup(
-                new AutoIndex(index, intake, null),
+                new AutoIndex(index, intake, led),
                 new AutoDriveToNote(m_visionSubsystem, m_driveSubsystem)
             )
         );
+
+        addRequirements(intake, vision, drive, index, led);
     }
 }
