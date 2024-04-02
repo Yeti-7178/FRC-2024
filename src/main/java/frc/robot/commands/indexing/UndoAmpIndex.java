@@ -4,6 +4,7 @@ package frc.robot.commands.indexing;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 
 //bc it's a command
 import edu.wpi.first.wpilibj2.command.Command;
@@ -14,6 +15,7 @@ public class UndoAmpIndex extends Command {
     private final IntakeSubsystem m_intake;
     private final IndexerSubsystem m_indexer;
     private final ShooterSubsystem m_shooter;
+    private final LEDSubsystem m_led;
 
     //establishing state management
     private enum  reversingStates {
@@ -27,12 +29,13 @@ public class UndoAmpIndex extends Command {
     //constructor and command scheduler stuff
     private boolean m_complete = false;
 
-    public UndoAmpIndex(IntakeSubsystem intake, IndexerSubsystem indexer, ShooterSubsystem shooter) {
+    public UndoAmpIndex(IntakeSubsystem intake, IndexerSubsystem indexer, ShooterSubsystem shooter, LEDSubsystem led) {
         m_intake = intake;
         m_indexer = indexer;
         m_shooter = shooter;
+        m_led = led;
 
-        addRequirements(m_intake, m_indexer, m_shooter);
+        addRequirements(m_intake, m_indexer, m_shooter, m_led);
     }
 
     @Override
@@ -84,6 +87,7 @@ public class UndoAmpIndex extends Command {
         m_intake.intakeStop();
         m_indexer.stopIndexConveyor();
         m_shooter.shooterOff();
+        m_led.LEDGreen();
     }
 
     @Override

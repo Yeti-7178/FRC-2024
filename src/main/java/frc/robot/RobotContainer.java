@@ -205,10 +205,13 @@ public class RobotContainer {
     
     //A button: makes robot "pick up note"
     new JoystickButton(m_driverController, Button.kA.value)
-        .onTrue(
-            new AutoPickUpNote(m_intakeSubsystem, m_visionSubsystem, m_robotDrive, m_indexerSubsystem, m_LEDSubsystem)
-        )
-        .onFalse(new InstantCommand(() -> m_robotDrive.drive(0, 0, 0, true, true), m_robotDrive));
+      //onTrue schedules the command when the button is pressed, whileTrue schedules it when the button is
+      //pressed but also cancels it when the button is released. I think whileTrue should be tested here
+      //tonight, I think it'd stop notes from flying out after A is released.
+      .onTrue(
+          new AutoPickUpNote(m_intakeSubsystem, m_visionSubsystem, m_robotDrive, m_indexerSubsystem, m_LEDSubsystem)
+      )
+      .onFalse(new InstantCommand(() -> m_robotDrive.drive(0, 0, 0, true, true), m_robotDrive));
 
     
     //B button: sets gyro to 90 degrees
@@ -238,7 +241,7 @@ public class RobotContainer {
         .onTrue(
           new ConditionalCommand(
             new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem),
-            new UndoAmpIndex(m_intakeSubsystem, m_indexerSubsystem, m_shooterSubsystem), 
+            new UndoAmpIndex(m_intakeSubsystem, m_indexerSubsystem, m_shooterSubsystem, m_LEDSubsystem), 
             () -> m_ampSubsystem.getAmpIndex()
         ));
     new JoystickButton(m_opperatorController, Button.kX.value)
