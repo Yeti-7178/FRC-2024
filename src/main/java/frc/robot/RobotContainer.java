@@ -43,6 +43,7 @@ import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.commands.indexing.AutoIndex;
 import frc.robot.commands.indexing.AutoIndexAmp;
 import frc.robot.commands.indexing.AutoIndexAuton;
+import frc.robot.commands.indexing.ResetScoringSystems;
 import frc.robot.commands.indexing.UndoAmpIndex;
 // import frc.robot.commands.indexing.EjectThroughIntake;
 import frc.robot.commands.shooter.AutoAlignAndShoot;
@@ -133,6 +134,7 @@ public class RobotContainer {
     //amp side
     m_autonChooser.setDefaultOption("Amp Side", new PathPlannerAuto("Amp Side"));
     m_autonChooser.addOption("Andy amp - 1, 2, 4", new PathPlannerAuto("Amp - 1, 2, 4"));
+    m_autonChooser.addOption("Andy Amp - 1, 4, 5", new PathPlannerAuto("Amp - 1, 4, 5"));
     //middle side
     m_autonChooser.addOption("Midle", new PathPlannerAuto("Mid Side"));
     m_autonChooser.addOption("Andy mid - 2, 1, 3, 4", new PathPlannerAuto("mid2134"));
@@ -208,10 +210,9 @@ public class RobotContainer {
       //onTrue schedules the command when the button is pressed, whileTrue schedules it when the button is
       //pressed but also cancels it when the button is released. I think whileTrue should be tested here
       //tonight, I think it'd stop notes from flying out after A is released.
-      .onTrue(
-          new AutoPickUpNote(m_intakeSubsystem, m_visionSubsystem, m_robotDrive, m_indexerSubsystem, m_LEDSubsystem)
-      )
-      .onFalse(new InstantCommand(() -> m_robotDrive.drive(0, 0, 0, true, true), m_robotDrive));
+      .whileTrue(new AutoPickUpNote(m_intakeSubsystem, m_visionSubsystem, m_robotDrive, m_indexerSubsystem, m_LEDSubsystem))
+      //.onFalse(new InstantCommand(() -> m_robotDrive.drive(0, 0, 0, true, true), m_robotDrive));
+      .onFalse(new ResetScoringSystems(m_intakeSubsystem, m_indexerSubsystem, m_ampSubsystem, m_shooterSubsystem, m_LEDSubsystem));
 
     
     //B button: sets gyro to 90 degrees

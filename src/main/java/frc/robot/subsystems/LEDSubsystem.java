@@ -5,6 +5,7 @@ import frc.robot.Constants.LEDConstants;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
@@ -44,7 +45,7 @@ public class LEDSubsystem extends SubsystemBase {
     public void LEDGreen() {
         //iterate through the buffer and set each LED to green
         for (int i = 0; i < LEDConstants.kLEDLength; i++) {
-            m_LEDBuffer.setLED(i, Color.kGreen);
+            m_LEDBuffer.setHSV(i, 60, 250, 115);
         }
 
         //update the LEDs with the new buffer
@@ -53,7 +54,7 @@ public class LEDSubsystem extends SubsystemBase {
     public void LEDRed() {
         //iterate through the buffer and set each LED to green
         for (int i = 0; i < LEDConstants.kLEDLength; i++) {
-            m_LEDBuffer.setLED(i, Color.kRed);
+            m_LEDBuffer.setHSV(i, 0, 250, 125);
         }
 
         //update the LEDs with the new buffer
@@ -62,7 +63,7 @@ public class LEDSubsystem extends SubsystemBase {
     public void LEDYellow() {
         //iterate through the buffer and set each LED to green
         for (int i = 0; i < LEDConstants.kLEDLength; i++) {
-            m_LEDBuffer.setLED(i, Color.kLightYellow);
+            m_LEDBuffer.setHSV(i, 25, 250, 125);
         }
 
         //update the LEDs with the new buffer
@@ -79,12 +80,12 @@ public class LEDSubsystem extends SubsystemBase {
         //update the LED Buffer
         for (int i = 0; i < LEDConstants.kLEDLength; i++) {
             if(i % 2 == 0){
-                m_LEDBuffer.setLED(i, new Color(redValue, greenValue, 255)); //should I create a new color object every time or use something else?
-
+                m_LEDBuffer.setHSV(i, 115, 250, 5); //should I create a new color object every time or use something else?
+                //m_LEDBuffer.setRGB(i, 0, 0, 150);
             }
             else
             {
-                 m_LEDBuffer.setLED(i, new Color(200, 200, 200));
+                m_LEDBuffer.setHSV(i, 225, 0, 25);
             }
             
         }
