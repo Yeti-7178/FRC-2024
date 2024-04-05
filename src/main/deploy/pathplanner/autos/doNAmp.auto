@@ -3,7 +3,7 @@
   "startingPose": {
     "position": {
       "x": 0.6361958567147553,
-      "y": 6.5810867963778685
+      "y": 6.58
     },
     "rotation": -119.98163936884927
   },
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoShoot"
+            "name": "First note AutoShoot"
           }
         }
       ]

@@ -76,6 +76,24 @@
           "data": {
             "name": "Amp Toggle"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Climb down"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Climb up"
+          }
         }
       ]
     }

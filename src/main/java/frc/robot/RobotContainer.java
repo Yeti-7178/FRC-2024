@@ -51,6 +51,7 @@ import frc.robot.commands.shooter.AutoAlignAndShootAuton;
 import frc.robot.commands.shooter.AutoFirstShot;
 import frc.robot.subsystems.IndexerSubsystem;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 
 import java.util.Map;
 
@@ -125,7 +126,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("First note AutoShoot", new AutoFirstShot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
     NamedCommands.registerCommand("Index Amp", new AutoIndexAmp(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
     NamedCommands.registerCommand("Amp Toggle", new InstantCommand(m_ampSubsystem::ampToggle));
-    
+    NamedCommands.registerCommand("Climb up", new InstantCommand(m_climbSubsystem::climbRightUp));
+    NamedCommands.registerCommand("Climb down", new InstantCommand(m_climbSubsystem::climbRightDown));
+
 
    
     //Adding options to the sendable chooser
@@ -156,6 +159,7 @@ public class RobotContainer {
     m_autonChooser.addOption("Andy testing", new PathPlannerAuto("Andy auto"));
     m_autonChooser.addOption("Rotation testing", new PathPlannerAuto("Rotation testing"));
     m_autonChooser.addOption("First note testing", new PathPlannerAuto("First shot test"));
+    m_autonChooser.addOption("Test auton 2", new PathPlannerAuto("test2auto"));
 
 
 
