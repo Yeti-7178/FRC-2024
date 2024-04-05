@@ -49,6 +49,7 @@ import frc.robot.commands.indexing.UndoAmpIndex;
 import frc.robot.commands.shooter.AutoAlignAndShoot;
 import frc.robot.commands.shooter.AutoAlignAndShootAuton;
 import frc.robot.commands.shooter.AutoFirstShot;
+import frc.robot.commands.shooter.Pass;
 import frc.robot.subsystems.IndexerSubsystem;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -225,9 +226,9 @@ public class RobotContainer {
             () -> m_robotDrive.setHeading(90),
             m_robotDrive));
 
+    //Y: pass note
     new JoystickButton(m_driverController, Button.kY.value)
-      .whileTrue(new RunCommand(() -> m_driverController.setRumble(RumbleType.kBothRumble, 0.5)))
-      .whileFalse(new InstantCommand(() -> m_driverController.setRumble(RumbleType.kBothRumble, 0)));
+        .onTrue(new Pass(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
 
     /* OPERATOR CONTROLLER */
     //intake and indexing

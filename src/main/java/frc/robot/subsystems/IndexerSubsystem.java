@@ -41,6 +41,11 @@ public class IndexerSubsystem extends SubsystemBase {
         m_indexConveyorMotor.set(IndexerConstants.kIndexerConveyorStdSpeed);
     }
 
+    public void runConveyorForwardFast() {
+        m_indexConveyorMotor.set(1);
+    }
+
+
     public void runConveyorReverse() {
         m_indexConveyorMotor.set(-IndexerConstants.kIndexerConveyorStdSpeed);
     }

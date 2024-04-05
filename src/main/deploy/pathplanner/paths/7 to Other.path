@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.01,
-        "y": 2.38
+        "x": 8.398526797053595,
+        "y": 2.486469588323793
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.061487326968947,
-        "y": 0.03513250963734445
+        "x": 5.450014124022542,
+        "y": 0.14160209796113737
       },
       "isLocked": false,
       "linkedName": null
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "Andy's Other side paths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 30.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

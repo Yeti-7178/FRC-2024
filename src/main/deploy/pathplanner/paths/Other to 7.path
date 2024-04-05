@@ -32,22 +32,22 @@
     },
     {
       "anchor": {
-        "x": 8.01,
-        "y": 2.38
+        "x": 8.398526797053595,
+        "y": 2.486469588323793
       },
       "prevControl": {
-        "x": 7.8317191023591315,
-        "y": 2.3254940596731957
+        "x": 8.220245899412726,
+        "y": 2.4319636479969886
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note 7"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.7,
-      "rotationDegrees": 14.0,
+      "waypointRelativePos": 0.65,
+      "rotationDegrees": 30.0,
       "rotateFast": false
     }
   ],
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 14.0,
+    "rotation": 30.0,
     "rotateFast": false
   },
   "reversed": false,
