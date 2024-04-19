@@ -38,7 +38,7 @@ public class Pass extends ParallelCommandGroup {
                     
                     new ParallelCommandGroup
                     (
-                        new InstantCommand(m_shooterSubsystem::shooterOn),
+                        new InstantCommand(() -> m_shooterSubsystem.setSpeed(1)),
                         new WaitCommand(.75)
                     ),
                    new InstantCommand(m_indexerSubsystem::runConveyorForwardFast),

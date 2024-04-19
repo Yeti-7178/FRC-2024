@@ -242,7 +242,11 @@ public class RobotContainer {
       .onFalse(new InstantCommand(() -> m_intakeSubsystem.intakeStop(), m_intakeSubsystem));
     //shooting and scoring
     new JoystickButton(m_opperatorController, Button.kA.value)
-        .onTrue(new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem));
+        .onTrue( new ConditionalCommand(
+            new AutoAlignAndShoot(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem),
+            new Pass(m_indexerSubsystem, m_shooterSubsystem, m_ampSubsystem, m_LEDSubsystem),
+            () -> !m_driverController.getRightBumperPressed()
+          ));
     new JoystickButton(m_opperatorController, Button.kY.value)
         .onTrue(
           new ConditionalCommand(
